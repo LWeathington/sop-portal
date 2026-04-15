@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotOn TMS — Internal SOP Library</title>
+    <meta name="description" content="SpotOn TMS internal standard operating procedures library for dispatch, freight, HR, and operations teams.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ===================== PASSWORD GATE ===================== -->
+    <div id="passwordGate" class="password-gate">
+        <div class="password-card">
+            <div class="password-logo">
+                <img src="logo.png" alt="SpotOn TMS" id="gateLogoImg" style="max-width:180px; height:auto; display:block; margin:0 auto 8px;">
+            </div>
+            <h1 class="password-title">Internal Portal</h1>
+            <p class="password-subtitle">Enter your access code to continue</p>
+            <div class="password-input-wrap">
+                <input type="password" id="passwordInput" placeholder="Access code" autocomplete="off" />
+                <button id="passwordSubmit" onclick="checkPassword()">→</button>
+            </div>
+            <p id="passwordError" class="password-error hidden">Incorrect access code. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- ===================== MAIN APP ===================== -->
+    <div id="appRoot" class="app-container hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header" style="text-align: center; padding: 32px 24px 16px;">
+                <img src="logo.png" alt="SpotOn TMS" id="sidebarLogoImg" style="max-width: 85%; height: auto; display: block; margin: 0 auto;">
+            </div>
+
+            <div class="search-container">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" placeholder="Search SOPs..." autocomplete="off">
+            </div>
+
+            <!-- Department Filter Tabs -->
+            <div class="dept-tabs" id="deptTabs">
+                <!-- Tabs injected by JS -->
+            </div>
+
+            <nav class="nav-menu" id="navMenu">
+                <!-- Populated by JS -->
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Empty state -->
+            <div id="emptyState" class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <h3>SpotOn SOP Library</h3>
+                <p>Select any document from the sidebar to open it in Google Docs.</p>
+                <div class="empty-state-stats">
+                    <div class="empty-stat">
+                        <div class="empty-stat-num">23</div>
+                        <div class="empty-stat-label">Documents</div>
+                    </div>
+                    <div class="empty-stat">
+                        <div class="empty-stat-num">5</div>
+                        <div class="empty-stat-label">Departments</div>
+                    </div>
+                    <div class="empty-stat">
+                        <div class="empty-stat-num">Live</div>
+                        <div class="empty-stat-label">Always updated</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SOP card renders here -->
+            <div id="content"></div>
+        </main>
+    </div>
+
+    <!-- Password Gate Logic -->
+    <script>
+        const PORTAL_PASSWORD = 'spoton2025';
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorEl = document.getElementById('passwordError');
+            if (input === PORTAL_PASSWORD) {
+                document.getElementById('passwordGate').style.opacity = '0';
+                document.getElementById('passwordGate').style.pointerEvents = 'none';
+                setTimeout(() => {
+                    document.getElementById('passwordGate').style.display = 'none';
+                    document.getElementById('appRoot').classList.remove('hidden');
+                }, 350);
+            } else {
+                errorEl.classList.remove('hidden');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').classList.add('shake');
+                setTimeout(() => document.getElementById('passwordInput').classList.remove('shake'), 500);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pwInput = document.getElementById('passwordInput');
+            pwInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') checkPassword();
+                document.getElementById('passwordError').classList.add('hidden');
+            });
+            pwInput.focus();
+        });
+    </script>
+
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
