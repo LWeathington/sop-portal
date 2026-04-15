@@ -245,6 +245,30 @@ html, body {
 .home-subtitle {
     color: var(--text-secondary);
     font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.whats-changed-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.35);
+    color: #93c5fd;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 10px;
+    margin-top: 4px;
+    transition: all 0.2s ease;
+}
+
+.whats-changed-btn:hover {
+    background: rgba(59,130,246,0.2);
+    border-color: rgba(59,130,246,0.6);
+    color: #bfdbfe;
+    transform: translateY(-1px);
 }
 
 .tiles-grid {
