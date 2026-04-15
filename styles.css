@@ -314,11 +314,144 @@ html, body {
     border-radius: 20px;
 }
 
+.tile-person {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+}
+
 .tile-divider {
     height: 3px;
     border-radius: 3px;
     margin-bottom: 20px;
     width: 48px;
+}
+
+/* ---------- Role Header ---------- */
+.role-header {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.role-meta {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.role-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+}
+
+.role-person {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.role-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.role-reports {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* ---------- Job Description Section ---------- */
+.job-desc-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.jd-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+}
+
+.jd-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.owns-heading    { color: #10b981; }
+.supports-heading{ color: #3b82f6; }
+.notown-heading  { color: #ef4444; }
+
+.jd-list {
+    padding-left: 18px;
+    margin: 0;
+}
+
+.jd-list li {
+    font-size: 0.85rem;
+    color: #c8d4e8;
+    margin-bottom: 7px;
+    line-height: 1.5;
+}
+
+.not-owns li {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+/* ---------- BPM Chart Section ---------- */
+.bpm-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+}
+
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.bpm-chart svg {
+    max-width: 100%;
+    min-height: 120px;
+}
+
+/* ---------- SOP List Inner (in position view) ---------- */
+.sop-list-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+/* Make sop-card work in list view too */
+.sop-card {
+    border-radius: var(--radius-sm);
+}
+
+@media (max-width: 768px) {
+    .job-desc-section { grid-template-columns: 1fr; }
+    .sop-list-inner { grid-template-columns: 1fr; }
 }
 
 /* ---------- SOP List View ---------- */
