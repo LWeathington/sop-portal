@@ -1,0 +1,184 @@
+{
+    "categories": [
+        {
+            "name": "Dispatch Daily Operations",
+            "items": [
+                {
+                    "id": "morning-dispatch-operations",
+                    "title": "Morning Dispatch Operations",
+                    "url": "https://docs.google.com/document/d/1f9TFqJBOG6C19QVpBbUyZQdLVy0_u46NjlafJXTDTKI/edit",
+                    "tags": ["morning", "routine"]
+                },
+                {
+                    "id": "afternoon-dispatch-operations",
+                    "title": "Afternoon Dispatch Operations",
+                    "url": "https://docs.google.com/document/d/1QXgmr-80V_th194zrp9qP8kfYHTt_1YisSXctX4ASeA/edit",
+                    "tags": ["afternoon", "routine"]
+                },
+                {
+                    "id": "dispatch-daily-routine",
+                    "title": "Dispatch Daily Routine",
+                    "url": "https://docs.google.com/document/d/1YUE_9AqpenXCOsYLFRMrD1iK-e79xAi9wdGoqBnF66k/edit",
+                    "tags": ["daily", "routine"]
+                },
+                {
+                    "id": "before-dispatch-compliance",
+                    "title": "Before Dispatch Compliance Check (Drivers)",
+                    "url": "https://docs.google.com/document/d/1L83oTTo8ExrZtWY2z-9PXwh8aG1s39xB/edit",
+                    "tags": ["compliance", "safety"]
+                },
+                {
+                    "id": "daily-checklist",
+                    "title": "Daily Checklist",
+                    "url": "https://docs.google.com/document/d/1RfISOAfRfRTg0JJCQ4TBR0IxggpFHbgV/edit",
+                    "tags": ["checklist", "daily"]
+                },
+                {
+                    "id": "upon-arrival-first-logins",
+                    "title": "Upon Arrival: First Log-Ins",
+                    "url": "https://docs.google.com/document/d/1rKvC0HQu7TY1n3HL-JJ-5IRjzxJ0gyHRabgajRZI37s/edit",
+                    "tags": ["morning", "login"]
+                },
+                {
+                    "id": "upon-arrival-tire-checks",
+                    "title": "Upon Arrival: Tire Checks",
+                    "url": "https://docs.google.com/document/d/1OGXht8BqZxG0apndVIA4C1bYietsljTP/edit",
+                    "tags": ["morning", "maintenance"]
+                },
+                {
+                    "id": "updating-trip-statuses",
+                    "title": "Updating Trip Statuses",
+                    "url": "https://docs.google.com/document/d/1wPymR4Elnnzzn0MxICus9UfRgBvTHOUSOI8NfTu7xA8/edit",
+                    "tags": ["trip", "status"]
+                }
+            ]
+        },
+        {
+            "name": "Spotting Operations",
+            "items": [
+                {
+                    "id": "empire-operations",
+                    "title": "Empire Operations",
+                    "url": "https://docs.google.com/document/d/1O-V_3ZfzbxHpaH4hHMME6SGecK1Bn2T4YUOdhWzWPZM/edit",
+                    "tags": ["empire", "spotting"]
+                },
+                {
+                    "id": "nfi-operations",
+                    "title": "NFI Operations",
+                    "url": "",
+                    "tags": ["nfi", "spotting"]
+                },
+                {
+                    "id": "cargill-operations",
+                    "title": "Cargill Operations",
+                    "url": "",
+                    "tags": ["cargill", "spotting"]
+                }
+            ]
+        },
+        {
+            "name": "System & TMS (Ditat / Samsara)",
+            "items": [
+                {
+                    "id": "adding-new-driver-ditat",
+                    "title": "Adding New Driver to Ditat",
+                    "url": "https://docs.google.com/document/d/1HiqekCoCozNt1lx9biAHoYETmWLBKy7um_ZLfRYEAPM/edit",
+                    "tags": ["ditat", "driver", "onboarding"]
+                },
+                {
+                    "id": "adding-new-driver-samsara",
+                    "title": "Adding New Driver to Samsara",
+                    "url": "https://docs.google.com/document/d/1Rbkj29e1PFqL9rye3UZ3SpaFHDkSZrdxUacZ8U6rTww/edit",
+                    "tags": ["samsara", "driver", "onboarding"]
+                },
+                {
+                    "id": "building-load-ditat",
+                    "title": "Building a Load in Ditat TMS",
+                    "url": "https://docs.google.com/document/d/1z-ZvdATPwpolcv15PvF2TcQIi85a4_oIDj0VJw0Rg6Q/edit",
+                    "tags": ["ditat", "load"]
+                },
+                {
+                    "id": "customer-driver-update",
+                    "title": "Customer / Driver Info Update",
+                    "url": "https://docs.google.com/document/d/1z68elR3JwIKf71lBf9CkH4y58MpZTvOb_EmwDXS-Oj8/edit",
+                    "tags": ["update", "info", "ditat"]
+                },
+                {
+                    "id": "ditat-driver-settlements",
+                    "title": "Ditat Driver Settlements",
+                    "url": "https://docs.google.com/document/d/1Z26NjiP7e5CqpYG830ytYuywHvQOe1pr/edit",
+                    "tags": ["ditat", "settlements", "payroll"]
+                }
+            ]
+        },
+        {
+            "name": "Freight & Logistics",
+            "items": [
+                {
+                    "id": "securing-backhaul",
+                    "title": "Searching for and Securing a Backhaul Load",
+                    "url": "https://docs.google.com/document/d/1IJ5zJG77ARkopJgV8uhVnv7B6xjyRsG-mby-SHuKecE/edit",
+                    "tags": ["freight", "backhaul"]
+                },
+                {
+                    "id": "trailer-onboarding",
+                    "title": "Trailer Onboarding / Offboarding",
+                    "url": "https://docs.google.com/document/d/1t2J9eaoqoYPUXtEbIf_7efIEZ5PJ2puv/edit",
+                    "tags": ["trailer", "inventory"]
+                }
+            ]
+        },
+        {
+            "name": "HR & Onboarding",
+            "items": [
+                {
+                    "id": "hiring-sop",
+                    "title": "Hiring SOP",
+                    "url": "https://docs.google.com/document/d/1qw1qlxH1iLhlwNBv7Civkj7poXuvmK3nb9O_ZQGoQIk/edit",
+                    "tags": ["hiring", "hr"]
+                },
+                {
+                    "id": "onsite-orientation-drivers",
+                    "title": "ON SITE Orientation — Drivers",
+                    "url": "https://docs.google.com/document/d/1_ZqNV-VUH_yUh8ZFoIBTwi7-KuuxIekCEuuSOlFjFN8/edit",
+                    "tags": ["orientation", "drivers", "onboarding"]
+                },
+                {
+                    "id": "orientation-spotters",
+                    "title": "Orientation SOP — Spotters",
+                    "url": "https://docs.google.com/document/d/1PCE8YcVnxVEx9ahw0ssdC0fGWe3Z1K54Pb2hXraC2l0/edit",
+                    "tags": ["orientation", "spotters", "onboarding"]
+                }
+            ]
+        },
+        {
+            "name": "Accounting & Finance",
+            "items": [
+                {
+                    "id": "ar-sop",
+                    "title": "AR SOP (Accounts Receivable)",
+                    "url": "https://docs.google.com/document/d/1uYr26r7d8tt4CDsFzwunXP9Lff6LtMYQ0DkaqOxTMns/edit",
+                    "tags": ["ar", "accounting", "receivable"]
+                },
+                {
+                    "id": "creating-qb-invoices",
+                    "title": "Creating QB Invoices",
+                    "url": "https://docs.google.com/document/d/1rLgwFJIRusMuUymn69lBVc4ZDkhvF1ua/edit",
+                    "tags": ["quickbooks", "invoices", "accounting"]
+                },
+                {
+                    "id": "renewing-qshera-paychex",
+                    "title": "Renewing QSHERA Plan with Paychex",
+                    "url": "https://docs.google.com/document/d/1d_DxfB_ZGVoaIogNqcih3vFOCnxx5FwL/edit",
+                    "tags": ["paychex", "benefits", "hr"]
+                },
+                {
+                    "id": "sop-bill-empire-mondays",
+                    "title": "SOP: Bill Empire (Mondays)",
+                    "url": "https://docs.google.com/document/d/1E7yrGuzzVGWIyuk9pkb2U3iimIGIGmT457s1KjPbIQ8/edit",
+                    "tags": ["billing", "empire", "monday"]
+                }
+            ]
+        }
+    ]
+}
