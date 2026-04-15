@@ -1,171 +1,266 @@
-class SOPPortal {
-    constructor() {
-        this.sopsData = null;
-        this.currentSopId = null;
-        this.activeDept = 'all';
+/* ============================================================
+   SPOT ON TMS — SOP Portal App Logic
+   Tile-based navigation, inline markdown rendering
+   ============================================================ */
 
-        // DOM Elements
-        this.navMenu = document.getElementById('navMenu');
-        this.deptTabs = document.getElementById('deptTabs');
-        this.contentDiv = document.getElementById('content');
-        this.emptyState = document.getElementById('emptyState');
-        this.searchInput = document.getElementById('searchInput');
+// ── POSITION DEFINITIONS ─────────────────────────────────────
+const POSITIONS = [
+    {
+        id: 'dispatch',
+        name: 'Dispatch Operations',
+        icon: '🚛',
+        desc: 'Daily dispatch routines, trip management, check calls, and driver coordination.',
+        accentVar: '--accent-1',
+        accentColor: '#3b82f6',
+        tileBg: 'linear-gradient(135deg, #0f2040 0%, #0a1525 100%)',
+        sops: [
+            { id: 'morning-dispatch-operations',      title: 'Morning Dispatch Operations',                file: 'sops/morning-dispatch-operations.md' },
+            { id: 'afternoon-dispatch-operations',    title: 'Afternoon Dispatch Operations',              file: 'sops/afternoon-dispatch-operations.md' },
+            { id: 'dispatch-daily-routine',           title: 'Dispatch Daily Routine',                     file: 'sops/dispatch-daily-routine.md' },
+            { id: 'daily-checklist',                  title: 'Daily Checklist',                            file: 'sops/daily-checklist.md' },
+            { id: 'daily-dispatch-objectives',        title: 'Daily Dispatch Objectives',                  file: 'sops/daily-dispatch-objectives.md' },
+            { id: 'updating-trip-statuses',           title: 'Updating Trip Statuses',                     file: 'sops/updating-trip-statuses.md' },
+            { id: 'upon-arrival-first-logins',        title: 'Upon Arrival: First Log-Ins',                file: 'sops/upon-arrival-first-logins.md' },
+            { id: 'upon-arrival-tire-checks',         title: 'Upon Arrival: Tire Checks',                  file: 'sops/upon-arrival-tire-checks.md' },
+            { id: 'before-dispatch-compliance-check', title: 'Before Dispatch Compliance Check (Drivers)', file: 'sops/before-dispatch-compliance-check-drivers.md' },
+        ]
+    },
+    {
+        id: 'accounting',
+        name: 'Accounting & Finance',
+        icon: '💼',
+        desc: 'Invoicing, accounts receivable, QuickBooks workflows, payroll, and billing.',
+        accentColor: '#10b981',
+        tileBg: 'linear-gradient(135deg, #0a2a1a 0%, #071510 100%)',
+        sops: [
+            { id: 'sop-bill-empire-mondays',          title: 'SOP: Bill Empire (Mondays)',                 file: 'sops/sop-bill-empire-mondays.md' },
+            { id: 'how-to-attach-and-invoice-ditat',  title: 'Attach Documents & Process Invoices in Ditat', file: 'sops/how-to-attach-documents-and-process-invoices-in-ditat-tms.md' },
+            { id: 'ar-sop',                           title: 'AR SOP (Accounts Receivable)',               file: null },
+            { id: 'creating-qb-invoices',             title: 'Creating QB Invoices',                       file: null },
+            { id: 'renewing-qshera-paychex',          title: 'Renewing QSHERA Plan with Paychex',          file: null },
+        ]
+    },
+    {
+        id: 'yard',
+        name: 'Yard & Spotting Operations',
+        icon: '🏗️',
+        desc: 'Cargill yard management, trailer spotting, Empire and NFI operations.',
+        accentColor: '#f59e0b',
+        tileBg: 'linear-gradient(135deg, #2a1a06 0%, #180e02 100%)',
+        sops: [
+            { id: 'trailer-onboarding-offboarding',   title: 'Trailer Onboarding / Offboarding',           file: 'sops/trailer-onboarding-offboarding-sop.md' },
+            { id: 'sop-bill-empire-spotting',         title: 'Empire Spotting Operations',                 file: null },
+            { id: 'cargill-operations',               title: 'Cargill Operations',                         file: null },
+            { id: 'nfi-operations',                   title: 'NFI Operations',                             file: null },
+        ]
+    },
+    {
+        id: 'freight',
+        name: 'Freight & Logistics',
+        icon: '📦',
+        desc: 'Load searching, backhaul securing, and freight brokerage procedures.',
+        accentColor: '#06b6d4',
+        tileBg: 'linear-gradient(135deg, #062030 0%, #030f18 100%)',
+        sops: [
+            { id: 'searching-for-and-securing-a-backhaul-load', title: 'Searching for and Securing a Backhaul Load', file: 'sops/searching-for-and-securing-a-backhaul-load.md' },
+            { id: 'entering-a-cargill-load',          title: 'Entering a Cargill Load',                    file: 'sops/entering-a-cargill-load.md' },
+        ]
+    },
+    {
+        id: 'systems',
+        name: 'Systems & TMS',
+        icon: '⚙️',
+        desc: 'Ditat TMS and Samsara setup, driver profiles, load building, and system workflows.',
+        accentColor: '#8b5cf6',
+        tileBg: 'linear-gradient(135deg, #1a0a30 0%, #0d0518 100%)',
+        sops: [
+            { id: 'adding-new-driver-to-ditat',       title: 'Adding a New Driver to Ditat',               file: 'sops/adding-new-driver-to-ditat.md' },
+            { id: 'adding-new-driver-to-samsara',     title: 'Adding a New Driver to Samsara',             file: 'sops/adding-new-driver-to-samsara.md' },
+            { id: 'building-a-load-in-ditat-tms',     title: 'Building a Load in Ditat TMS',               file: 'sops/building-a-load-in-ditat-tms.md' },
+            { id: 'customer-driver-info-update',      title: 'Customer / Driver Info Update',              file: 'sops/customer-driver-info-update.md' },
+        ]
+    },
+    {
+        id: 'hr',
+        name: 'HR & Onboarding',
+        icon: '🤝',
+        desc: 'Hiring, driver orientation, spotter onboarding, and HR compliance procedures.',
+        accentColor: '#a855f7',
+        tileBg: 'linear-gradient(135deg, #200a30 0%, #100517 100%)',
+        sops: [
+            { id: 'onboarding',                       title: 'General Onboarding',                         file: 'sops/onboarding.md' },
+            { id: 'hiring-sop',                       title: 'Hiring SOP',                                 file: null },
+            { id: 'onsite-orientation-drivers',       title: 'ON SITE Orientation — Drivers',             file: null },
+            { id: 'orientation-spotters',             title: 'Orientation SOP — Spotters',                 file: null },
+        ]
+    },
+    {
+        id: 'sales',
+        name: 'Sales',
+        icon: '📈',
+        desc: 'Customer acquisition, rate strategy, and sales process documentation.',
+        accentColor: '#ef4444',
+        tileBg: 'linear-gradient(135deg, #2a0a0a 0%, #180404 100%)',
+        sops: [
+            { id: 'sales-placeholder',                title: 'Sales SOPs — Coming Soon',                   file: null },
+        ]
+    },
+    {
+        id: 'compliance',
+        name: 'Compliance & Safety',
+        icon: '🛡️',
+        desc: 'DOT/FMCSA compliance, HOS, ELD requirements, and safety inspections.',
+        accentColor: '#14b8a6',
+        tileBg: 'linear-gradient(135deg, #062020 0%, #031010 100%)',
+        sops: [
+            { id: 'before-dispatch-compliance-check-drivers', title: 'Before Dispatch Compliance Check', file: 'sops/before-dispatch-compliance-check-drivers.md' },
+            { id: 'compliance-placeholder',           title: 'Compliance SOPs — Coming Soon',              file: null },
+        ]
+    },
+];
 
-        this.init();
-    }
+// ── STATE ─────────────────────────────────────────────────────
+let currentPosition = null;
+let currentSOP      = null;
 
-    async init() {
-        this.bindEvents();
-        await this.loadIndex();
-    }
+// ── INIT ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    renderHomeTiles();
+    setupSearch();
+});
 
-    bindEvents() {
-        this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
-    }
+// ── RENDER HOME TILES ─────────────────────────────────────────
+function renderHomeTiles() {
+    const grid = document.getElementById('tilesGrid');
+    grid.innerHTML = POSITIONS.map((pos, i) => {
+        const count = pos.sops.filter(s => s.file).length;
+        const total = pos.sops.length;
+        return `
+        <div class="position-tile" id="tile-${pos.id}" onclick="openPosition('${pos.id}')"
+             style="border-top: 3px solid ${pos.accentColor}; background: ${pos.tileBg};">
+            <span class="tile-icon">${pos.icon}</span>
+            <div class="tile-name">${pos.name}</div>
+            <div class="tile-desc">${pos.desc}</div>
+            <span class="tile-count"
+                  style="background: ${pos.accentColor}22; color: ${pos.accentColor};">
+                ${total} procedure${total !== 1 ? 's' : ''}
+            </span>
+        </div>`;
+    }).join('');
+}
 
-    async loadIndex() {
-        try {
-            const response = await fetch('./sops/index.json');
-            if (!response.ok) throw new Error('Failed to load SOP directory.');
-            this.sopsData = await response.json();
-            this.renderDeptTabs(this.sopsData);
-            this.renderSidebar(this.sopsData);
-        } catch (error) {
-            console.error('Error loading index:', error);
-            this.showError('Could not load SOP library. Please ensure sops/index.json exists.');
-        }
-    }
+// ── OPEN POSITION ─────────────────────────────────────────────
+function openPosition(posId) {
+    currentPosition = POSITIONS.find(p => p.id === posId);
+    if (!currentPosition) return;
 
-    // ── Department Tabs ──────────────────────────────────────────
-    renderDeptTabs(data) {
-        this.deptTabs.innerHTML = '';
+    showView('viewSOPList');
+    document.getElementById('pageTitle').textContent = currentPosition.name;
+    document.getElementById('backBtn').classList.remove('hidden');
 
-        const allTab = document.createElement('button');
-        allTab.className = 'dept-tab active';
-        allTab.textContent = 'All';
-        allTab.dataset.dept = 'all';
-        allTab.onclick = () => this.setDept('all');
-        this.deptTabs.appendChild(allTab);
-
-        data.categories.forEach(cat => {
-            const tab = document.createElement('button');
-            tab.className = 'dept-tab';
-            tab.textContent = cat.name.split(' ')[0]; // First word: "Dispatch", "System", "Freight", "HR", "Accounting"
-            tab.title = cat.name;
-            tab.dataset.dept = cat.name;
-            tab.onclick = () => this.setDept(cat.name);
-            this.deptTabs.appendChild(tab);
-        });
-    }
-
-    setDept(dept) {
-        this.activeDept = dept;
-        this.deptTabs.querySelectorAll('.dept-tab').forEach(t => {
-            t.classList.toggle('active', t.dataset.dept === dept);
-        });
-        this.searchInput.value = '';
-        this.renderSidebar(this.sopsData, '');
-    }
-
-    // ── Sidebar ──────────────────────────────────────────────────
-    renderSidebar(data, filterQuery = '') {
-        this.navMenu.innerHTML = '';
-        const q = filterQuery.toLowerCase();
-
-        const categoriesToShow = this.activeDept === 'all'
-            ? data.categories
-            : data.categories.filter(cat => cat.name === this.activeDept);
-
-        categoriesToShow.forEach(category => {
-            const filteredItems = category.items.filter(item =>
-                item.title.toLowerCase().includes(q) ||
-                (item.tags && item.tags.some(tag => tag.toLowerCase().includes(q)))
-            );
-
-            if (filteredItems.length > 0) {
-                const categoryEl = document.createElement('div');
-                categoryEl.className = 'nav-category';
-
-                const titleEl = document.createElement('h4');
-                titleEl.className = 'nav-category-title';
-                titleEl.textContent = category.name;
-                categoryEl.appendChild(titleEl);
-
-                filteredItems.forEach(item => {
-                    const linkEl = document.createElement('a');
-                    linkEl.className = 'nav-item' + (this.currentSopId === item.id ? ' active' : '');
-                    linkEl.textContent = item.title;
-                    linkEl.onclick = (e) => {
-                        e.preventDefault();
-                        this.showSopCard(item, category.name);
-                    };
-                    categoryEl.appendChild(linkEl);
-                });
-
-                this.navMenu.appendChild(categoryEl);
-            }
-        });
-    }
-
-    // ── SOP Preview Card ─────────────────────────────────────────
-    showSopCard(item, categoryName) {
-        this.currentSopId = item.id;
-        this.renderSidebar(this.sopsData, this.searchInput.value);
-
-        this.emptyState.classList.add('hidden');
-
-        const tagsHtml = item.tags
-            ? item.tags.map(tag => `<span class="sop-tag">${tag}</span>`).join('')
-            : '';
-
-        this.contentDiv.innerHTML = `
-            <div class="sop-card">
-                <div class="sop-card-header">
-                    <div class="sop-card-category">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                        ${categoryName}
-                    </div>
-                    <h1 class="sop-card-title">${item.title}</h1>
-                </div>
-
-                <div class="sop-card-body">
-                    ${tagsHtml ? `<div class="sop-tags">${tagsHtml}</div>` : ''}
-
-                    <div class="sop-card-desc">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="8"></line><line x1="12" y1="12" x2="12" y2="16"></line></svg>
-                        This document lives in Google Docs. Any edits made there are immediately live — no rebuild required.
-                    </div>
-
-                    <a class="sop-open-btn ${!item.url ? 'sop-open-btn--disabled' : ''}" ${item.url ? `href="${item.url}" target="_blank" rel="noopener"` : ''}>
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        ${item.url ? 'Open in Google Docs' : 'Link not yet added'}
-                        ${item.url ? `<svg class="open-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>` : ''}
-                    </a>
-                    <p class="sop-card-hint">${item.url ? 'Opens in a new tab' : 'Ask your manager for the document link'}</p>
-                </div>
+    const grid = document.getElementById('sopListGrid');
+    grid.innerHTML = currentPosition.sops.map(sop => {
+        const available = !!sop.file;
+        return `
+        <div class="sop-card ${available ? '' : 'sop-coming-soon'}"
+             ${available ? `onclick="openSOP('${sop.id}')"` : ''}
+             style="border-top: 2px solid ${available ? currentPosition.accentColor : 'var(--border)'};"
+             id="sopcard-${sop.id}">
+            <div class="sop-card-title">${sop.title}</div>
+            <div class="sop-card-meta">
+                <span style="color: ${available ? currentPosition.accentColor : 'var(--text-muted)'};">
+                    ${available ? currentPosition.name : 'Coming Soon'}
+                </span>
+                ${available ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
             </div>
-        `;
+        </div>`;
+    }).join('');
+}
 
-        document.querySelector('.main-content').scrollTop = 0;
+// ── OPEN SOP ──────────────────────────────────────────────────
+async function openSOP(sopId) {
+    const sop = currentPosition.sops.find(s => s.id === sopId);
+    if (!sop || !sop.file) return;
+
+    showView('viewSOPContent');
+    document.getElementById('pageTitle').textContent = sop.title;
+    document.getElementById('sopContentTitle').textContent = sop.title;
+    document.getElementById('sopContentMeta').innerHTML =
+        `<span>${currentPosition.icon} ${currentPosition.name}</span>`;
+
+    const body = document.getElementById('sopContentBody');
+    body.innerHTML = '<div class="loading"><div class="spinner"></div> Loading...</div>';
+
+    try {
+        const resp = await fetch(sop.file);
+        if (!resp.ok) throw new Error('Not found');
+        const md = await resp.text();
+        body.innerHTML = marked.parse(md);
+    } catch (e) {
+        body.innerHTML = `<p style="color:var(--text-secondary)">Content coming soon.</p>`;
     }
 
-    handleSearch(query) {
-        if (!this.sopsData) return;
-        this.renderSidebar(this.sopsData, query);
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-    showError(message) {
-        this.emptyState.classList.remove('hidden');
-        this.contentDiv.innerHTML = '';
-        this.emptyState.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            <h3 style="color: #EF4444">Error</h3>
-            <p>${message}</p>
-        `;
+// ── NAVIGATION ────────────────────────────────────────────────
+function goBack() {
+    if (currentSOP) {
+        currentSOP = null;
+        openPosition(currentPosition.id);
+    } else if (currentPosition) {
+        currentPosition = null;
+        showView('viewHome');
+        document.getElementById('pageTitle').textContent = 'SOP Library';
+        document.getElementById('backBtn').classList.add('hidden');
     }
 }
 
-// Initialize on DOM Load
-document.addEventListener('DOMContentLoaded', () => {
-    window.portal = new SOPPortal();
-});
+function showView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(viewId).classList.remove('hidden');
+}
+
+// ── SEARCH ────────────────────────────────────────────────────
+function setupSearch() {
+    const input = document.getElementById('searchInput');
+    input.addEventListener('input', () => {
+        const q = input.value.toLowerCase().trim();
+        if (!q) {
+            if (currentPosition) openPosition(currentPosition.id);
+            else renderHomeTiles();
+            return;
+        }
+
+        // Search across all positions
+        showView('viewSOPList');
+        document.getElementById('backBtn').classList.remove('hidden');
+        document.getElementById('pageTitle').textContent = `Search: "${input.value}"`;
+
+        const results = [];
+        POSITIONS.forEach(pos => {
+            pos.sops.forEach(sop => {
+                if (sop.title.toLowerCase().includes(q) || pos.name.toLowerCase().includes(q)) {
+                    results.push({ ...sop, posName: pos.name, posIcon: pos.icon, accentColor: pos.accentColor, posId: pos.id });
+                }
+            });
+        });
+
+        const grid = document.getElementById('sopListGrid');
+        if (results.length === 0) {
+            grid.innerHTML = '<p style="color:var(--text-secondary); padding:20px;">No results found.</p>';
+            return;
+        }
+
+        grid.innerHTML = results.map(r => `
+            <div class="sop-card ${r.file ? '' : 'sop-coming-soon'}"
+                 ${r.file ? `onclick="currentPosition=POSITIONS.find(p=>p.id==='${r.posId}');openSOP('${r.id}')"` : ''}
+                 style="border-top: 2px solid ${r.file ? r.accentColor : 'var(--border)'};">
+                <div class="sop-card-title">${r.title}</div>
+                <div class="sop-card-meta">
+                    <span style="color:${r.accentColor}">${r.posIcon} ${r.posName}</span>
+                    ${r.file ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
+                </div>
+            </div>`).join('');
+    });
+}
