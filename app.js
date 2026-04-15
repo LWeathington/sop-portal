@@ -423,6 +423,7 @@ let currentPosition = null;
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     renderHomeTiles();
+    renderRolesGrid();
     setupSearch();
     if (typeof mermaid !== 'undefined') {
         mermaid.initialize({ startOnLoad: false, theme: 'dark', themeVariables: { background: '#111827', primaryColor: '#1e3a5f', edgeLabelBackground: '#111827' } });
@@ -600,9 +601,75 @@ function setupSearch() {
                      style="border-left:3px solid ${r.file ? r.pos.accentColor : 'var(--border)'}">
                     <div class="sop-card-title">${r.title}</div>
                     <div class="sop-card-meta">
-                        <span style="color:${r.pos.accentColor}">${r.pos.icon} ${r.pos.name} — ${r.pos.person}</span>
+                        <span style="color:${r.pos.accentColor}">${r.pos.icon} ${r.pos.name} &mdash; ${r.pos.person}</span>
                         ${r.file ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
                     </div>
                 </div>`).join('')}</div>`;
     });
+}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────
+function switchTab(tab) {
+    // Update tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+
+    // Show/hide panels
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    const panelMap = { sop: 'tabSOP', policies: 'tabPolicies', roles: 'tabRoles', forms: 'tabForms' };
+    document.getElementById(panelMap[tab]).classList.remove('hidden');
+
+    // Show/hide search (SOP tab only)
+    const searchWrap = document.getElementById('searchWrap');
+    if (searchWrap) searchWrap.style.display = tab === 'sop' ? '' : 'none';
+
+    // Reset SOP tab state when leaving
+    if (tab !== 'sop') {
+        document.getElementById('backBtn').classList.add('hidden');
+        document.getElementById('pageTitle').textContent = 'Internal Portal';
+    } else {
+        if (!currentPosition) document.getElementById('pageTitle').textContent = 'SOP Library';
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── ROLES GRID (accordion) ────────────────────────────────────
+function renderRolesGrid() {
+    const grid = document.getElementById('rolesGrid');
+    if (!grid) return;
+    grid.innerHTML = POSITIONS.map(pos => {
+        const jd = pos.jobDescription;
+        return `
+        <div class="role-accordion" id="accordion-${pos.id}">
+            <div class="role-accordion-header" onclick="toggleAccordion('${pos.id}')" style="border-left: 4px solid ${pos.accentColor}">
+                <span class="role-accordion-icon">${pos.icon}</span>
+                <div style="flex:1">
+                    <div class="role-accordion-name">${pos.name}</div>
+                    <div class="role-accordion-person" style="color:${pos.accentColor}">${pos.person} &mdash; ${pos.personTitle}</div>
+                </div>
+                <span class="role-accordion-chevron">&#9660;</span>
+            </div>
+            <div class="role-accordion-body">
+                <div class="job-desc-section" style="margin-top:18px">
+                    <div class="jd-col">
+                        <div class="jd-heading owns-heading">&#9989; Owns</div>
+                        <ul class="jd-list">${jd.owns.map(i => `<li>${i}</li>`).join('')}</ul>
+                    </div>
+                    <div class="jd-col">
+                        <div class="jd-heading supports-heading">&#129309; Supports</div>
+                        <ul class="jd-list">${jd.supports.map(i => `<li>${i}</li>`).join('')}</ul>
+                        ${jd.notOwns.length ? `
+                        <div class="jd-heading notown-heading" style="margin-top:20px">&#128683; Not This Role</div>
+                        <ul class="jd-list not-owns">${jd.notOwns.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function toggleAccordion(posId) {
+    const el = document.getElementById('accordion-' + posId);
+    el.classList.toggle('open');
 }
