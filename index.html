@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spot On TMS — Internal SOP Library</title>
-    <meta name="description" content="Spot On TMS internal standard operating procedures library.">
+    <title>Spot On TMS — Internal Portal</title>
+    <meta name="description" content="Spot On TMS internal portal — SOPs, company policies, roles, and forms.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Marked.js for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Mermaid.js for BPM flowcharts -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- ===================== PASSWORD GATE ===================== -->
+    <!-- PASSWORD GATE -->
     <div id="passwordGate" class="password-gate">
         <div class="password-card">
             <div class="password-logo">
@@ -32,17 +30,17 @@
         </div>
     </div>
 
-    <!-- ===================== MAIN APP ===================== -->
+    <!-- MAIN APP -->
     <div id="appRoot" class="app-container hidden">
 
-        <!-- Top Navigation Bar -->
+        <!-- Top Nav -->
         <header class="top-nav">
             <div class="top-nav-left">
                 <button id="backBtn" class="back-btn hidden" onclick="goBack()">&#8592; Back</button>
                 <span class="logo-text nav-logo">Spot On <span class="logo-accent">TMS</span></span>
             </div>
             <div class="top-nav-center">
-                <h2 id="pageTitle" class="page-title">SOP Library</h2>
+                <h2 id="pageTitle" class="page-title">Internal Portal</h2>
             </div>
             <div class="top-nav-right">
                 <div class="search-wrap" id="searchWrap">
@@ -51,45 +49,187 @@
             </div>
         </header>
 
-        <!-- ===== VIEW: HOME (Tiles) ===== -->
-        <div id="viewHome" class="view">
-            <div class="home-intro">
-                <p class="home-subtitle">Select a position to view its standard operating procedures</p>
-                <a href="whats-changed.html" class="whats-changed-btn" target="_blank">
-                    📋 What's Changed — Team Meeting Summary
-                </a>
-            </div>
-            <div class="tiles-grid" id="tilesGrid">
-                <!-- Populated by JS -->
-            </div>
-        </div>
+        <!-- Tab Bar -->
+        <nav class="tab-bar">
+            <button class="tab-btn active" id="tab-sop"      onclick="switchTab('sop')">&#128218; SOP Library</button>
+            <button class="tab-btn"        id="tab-policies" onclick="switchTab('policies')">&#128196; Company Policies</button>
+            <button class="tab-btn"        id="tab-roles"    onclick="switchTab('roles')">&#128101; Roles &amp; Responsibilities</button>
+            <button class="tab-btn"        id="tab-forms"    onclick="switchTab('forms')">&#128203; Forms &amp; Templates</button>
+        </nav>
 
-        <!-- ===== VIEW: SOP LIST for a position ===== -->
-        <div id="viewSOPList" class="view hidden">
-            <div class="sop-list-grid" id="sopListGrid">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-
-        <!-- ===== VIEW: SOP CONTENT ===== -->
-        <div id="viewSOPContent" class="view hidden">
-            <div class="sop-content-wrapper">
-                <div class="sop-content-header">
-                    <h1 id="sopContentTitle" class="sop-content-title"></h1>
-                    <div id="sopContentMeta" class="sop-content-meta"></div>
+        <!-- TAB: SOP LIBRARY -->
+        <div id="tabSOP" class="tab-panel">
+            <div id="viewHome" class="view">
+                <div class="home-intro">
+                    <p class="home-subtitle">Select a position to view its standard operating procedures</p>
+                    <a href="whats-changed.html" class="whats-changed-btn" target="_blank">&#128203; What's Changed &mdash; Team Meeting Summary</a>
                 </div>
-                <div id="sopContentBody" class="sop-content-body markdown-body">
-                    <!-- Markdown rendered here -->
+                <div class="tiles-grid" id="tilesGrid"></div>
+            </div>
+            <div id="viewSOPList" class="view hidden">
+                <div class="sop-list-grid" id="sopListGrid"></div>
+            </div>
+            <div id="viewSOPContent" class="view hidden">
+                <div class="sop-content-wrapper">
+                    <div class="sop-content-header">
+                        <h1 id="sopContentTitle" class="sop-content-title"></h1>
+                        <div id="sopContentMeta" class="sop-content-meta"></div>
+                    </div>
+                    <div id="sopContentBody" class="sop-content-body markdown-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: COMPANY POLICIES -->
+        <div id="tabPolicies" class="tab-panel hidden">
+            <div class="view">
+                <div class="doc-tab-header">
+                    <p class="doc-tab-subtitle">Official company documents. Click <strong>View</strong> to open or <strong>Download</strong> to save a copy.</p>
+                </div>
+
+                <div class="doc-section-title">&#128218; Company Policies</div>
+                <div class="doc-grid">
+                    <div class="doc-card">
+                        <div class="doc-icon">&#128366;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Spot On Driver Handbook</div>
+                            <div class="doc-desc">Primary guide for driver expectations, conduct, and employment rules.</div>
+                        </div>
+                        <div class="doc-actions">
+                            <a class="doc-btn view-btn" href="https://drive.google.com/file/d/1qrvo5AbvBFvGGmelLcTWzR5ba9_bKtwW/view" target="_blank">View</a>
+                            <a class="doc-btn dl-btn" href="https://drive.google.com/uc?export=download&id=1qrvo5AbvBFvGGmelLcTWzR5ba9_bKtwW">Download</a>
+                        </div>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-icon">&#128737;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Safety &amp; Cell Phone Policy</div>
+                            <div class="doc-desc">Safety handbook covering accident procedures, pre-trip inspections, and the electronic device policy.</div>
+                        </div>
+                        <div class="doc-actions">
+                            <a class="doc-btn view-btn" href="https://drive.google.com/file/d/166xpDxxLCauxitbhQzoyP4exPZmy6fLC/view" target="_blank">View</a>
+                            <a class="doc-btn dl-btn" href="https://drive.google.com/uc?export=download&id=166xpDxxLCauxitbhQzoyP4exPZmy6fLC">Download</a>
+                        </div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128683;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Drug &amp; Alcohol Policy</div>
+                            <div class="doc-desc">Company drug and alcohol testing requirements and procedures.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                </div>
+
+                <div class="doc-section-title" style="margin-top:36px">&#127963; Insurance &amp; Legal</div>
+                <div class="doc-grid">
+                    <div class="doc-card">
+                        <div class="doc-icon">&#128203;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Master Certificate of Insurance (2026)</div>
+                            <div class="doc-desc">Current proof of insurance for brokers and customers.</div>
+                        </div>
+                        <div class="doc-actions">
+                            <a class="doc-btn view-btn" href="https://drive.google.com/file/d/1DA2fA-L7TQgBBRDD7s_47WE1dpARO-Lo/view" target="_blank">View</a>
+                            <a class="doc-btn dl-btn" href="https://drive.google.com/uc?export=download&id=1DA2fA-L7TQgBBRDD7s_47WE1dpARO-Lo">Download</a>
+                        </div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#9878;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">DOT Operating Authority</div>
+                            <div class="doc-desc">MC/DOT authority certificate for new broker and customer onboarding.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128221;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">W-9 (2026)</div>
+                            <div class="doc-desc">Current signed W-9 for new broker and customer onboarding.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: ROLES & RESPONSIBILITIES -->
+        <div id="tabRoles" class="tab-panel hidden">
+            <div class="view">
+                <div class="doc-tab-header">
+                    <p class="doc-tab-subtitle">Click any role to expand their full responsibilities.</p>
+                    <a href="whats-changed.html" class="whats-changed-btn" target="_blank" style="margin-top:12px">&#128203; What's Changed &mdash; Meeting Summary</a>
+                </div>
+                <div class="roles-grid" id="rolesGrid"></div>
+            </div>
+        </div>
+
+        <!-- TAB: FORMS & TEMPLATES -->
+        <div id="tabForms" class="tab-panel hidden">
+            <div class="view">
+                <div class="doc-tab-header">
+                    <p class="doc-tab-subtitle">Fillable forms and templates. Download and complete as needed.</p>
+                </div>
+
+                <div class="doc-section-title">&#128203; HR &amp; Employee Forms</div>
+                <div class="doc-grid">
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#127958;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Time Off Request Form</div>
+                            <div class="doc-desc">Submit PTO and time off requests using this standardized form.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128680;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Incident Report</div>
+                            <div class="doc-desc">Standard form for reporting accidents, injuries, or equipment damage.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#9997;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Driver Policy Acknowledgement</div>
+                            <div class="doc-desc">Required signature form for all new drivers acknowledging company policies.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                </div>
+
+                <div class="doc-section-title" style="margin-top:36px">&#128665; Operations &amp; Contracts</div>
+                <div class="doc-grid">
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#129309;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Owner Operator Lease Agreement</div>
+                            <div class="doc-desc">Standard lease agreement template for onboarding new owner-operators.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#9981;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Fuel Report Template</div>
+                            <div class="doc-desc">Weekly fuel usage tracking template used by Lindsay for reporting.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                </div>
+
+                <div class="doc-note">
+                    <strong>Adding documents:</strong> Share the Google Drive document link with Lindsay to get it added to the portal.
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Password Gate Logic -->
     <script>
         const PORTAL_PASSWORD = 'spoton2025';
-
         function checkPassword() {
             const input = document.getElementById('passwordInput').value;
             const errorEl = document.getElementById('passwordError');
@@ -108,7 +248,6 @@
                 setTimeout(() => document.getElementById('passwordInput').classList.remove('shake'), 500);
             }
         }
-
         document.addEventListener('DOMContentLoaded', () => {
             const pwInput = document.getElementById('passwordInput');
             pwInput.addEventListener('keydown', (e) => {
@@ -118,8 +257,6 @@
             pwInput.focus();
         });
     </script>
-
-    <!-- Application Logic -->
     <script src="app.js"></script>
 </body>
 </html>
