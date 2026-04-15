@@ -156,6 +156,44 @@ html, body {
 }
 .shake { animation: shake 0.4s ease; }
 
+/* ---------- Tab Bar ---------- */
+.tab-bar {
+    display: flex;
+    gap: 2px;
+    background: #080d1a;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 64px;
+    z-index: 99;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 14px 18px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+}
+
+.tab-btn:hover { color: var(--text-primary); }
+
+.tab-btn.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.tab-panel { display: block; }
+.tab-panel.hidden { display: none; }
+
 /* ---------- Top Nav ---------- */
 .top-nav {
     position: sticky;
@@ -683,6 +721,144 @@ html, body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ---------- Doc Cards (Policies / Forms tabs) ---------- */
+.doc-tab-header { text-align: center; margin-bottom: 32px; }
+.doc-tab-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+
+.doc-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+}
+
+.doc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.doc-card:not(.doc-coming-soon):hover {
+    border-color: rgba(59,130,246,0.4);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.doc-coming-soon { opacity: 0.55; }
+
+.doc-icon { font-size: 1.8rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+
+.doc-info { flex: 1; min-width: 0; }
+.doc-name { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.doc-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+.doc-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+    align-items: flex-end;
+}
+
+.doc-btn {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+}
+
+.view-btn {
+    background: rgba(59,130,246,0.12);
+    color: #93c5fd;
+    border: 1px solid rgba(59,130,246,0.3);
+}
+.view-btn:hover { background: rgba(59,130,246,0.22); }
+
+.dl-btn {
+    background: rgba(16,185,129,0.12);
+    color: #6ee7b7;
+    border: 1px solid rgba(16,185,129,0.3);
+}
+.dl-btn:hover { background: rgba(16,185,129,0.22); }
+
+.doc-coming {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.doc-note {
+    margin-top: 28px;
+    background: rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ---------- Roles Grid ---------- */
+.roles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.role-accordion {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.role-accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+
+.role-accordion-header:hover { background: rgba(255,255,255,0.03); }
+
+.role-accordion-icon { font-size: 1.6rem; line-height: 1; }
+.role-accordion-name { font-size: 0.95rem; font-weight: 700; flex: 1; }
+.role-accordion-person { font-size: 0.78rem; }
+.role-accordion-chevron { color: var(--text-muted); font-size: 0.9rem; transition: transform 0.2s; }
+.role-accordion.open .role-accordion-chevron { transform: rotate(180deg); }
+
+.role-accordion-body {
+    display: none;
+    padding: 0 22px 22px;
+    border-top: 1px solid var(--border);
+}
+
+.role-accordion.open .role-accordion-body { display: block; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
     .top-nav { padding: 0 16px; }
@@ -691,6 +867,8 @@ html, body {
     .position-tile { padding: 24px 18px; }
     .tile-icon { font-size: 2rem; }
     .search-wrap input { width: 160px; }
+    .doc-grid { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 0.78rem; padding: 12px 12px; }
 }
 
 @media (max-width: 480px) {
