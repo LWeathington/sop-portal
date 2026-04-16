@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spot On TMS — Internal Portal</title>
     <meta name="description" content="Spot On TMS internal portal — SOPs, company policies, roles, and forms.">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0f1e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SpotOn TMS">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -173,12 +182,49 @@
                 </div>
 
                 <div class="doc-section-title">&#128203; HR &amp; Employee Forms</div>
+
+                <div class="doc-note" style="margin-bottom:18px">
+                    <strong>Employee Packets:</strong> There are separate packets for each driver/staff type. Download the correct one for the new hire.
+                </div>
+
                 <div class="doc-grid">
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128665;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Employee Packet — Company Driver</div>
+                            <div class="doc-desc">Full onboarding packet for company CDL drivers. Includes policy forms, acknowledgements, and emergency contact.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128665;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Employee Packet — Hostler Driver</div>
+                            <div class="doc-desc">Onboarding packet specifically for hostler/spotter drivers.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128665;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Employee Packet — Building Staff</div>
+                            <div class="doc-desc">Onboarding packet for non-driving building and facility staff.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
+                    <div class="doc-card doc-coming-soon">
+                        <div class="doc-icon">&#128665;</div>
+                        <div class="doc-info">
+                            <div class="doc-name">Employee Packet — Owner Operator</div>
+                            <div class="doc-desc">Packet for onboarding owner-operators including lease and compliance forms.</div>
+                        </div>
+                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
+                    </div>
                     <div class="doc-card doc-coming-soon">
                         <div class="doc-icon">&#127958;</div>
                         <div class="doc-info">
                             <div class="doc-name">Time Off Request Form</div>
-                            <div class="doc-desc">Submit PTO and time off requests using this standardized form.</div>
+                            <div class="doc-desc">Submit PTO and time off requests using this form.</div>
                         </div>
                         <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
                     </div>
@@ -190,14 +236,6 @@
                         </div>
                         <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
                     </div>
-                    <div class="doc-card doc-coming-soon">
-                        <div class="doc-icon">&#9997;</div>
-                        <div class="doc-info">
-                            <div class="doc-name">Driver Policy Acknowledgement</div>
-                            <div class="doc-desc">Required signature form for all new drivers acknowledging company policies.</div>
-                        </div>
-                        <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
-                    </div>
                 </div>
 
                 <div class="doc-section-title" style="margin-top:36px">&#128665; Operations &amp; Contracts</div>
@@ -206,7 +244,7 @@
                         <div class="doc-icon">&#129309;</div>
                         <div class="doc-info">
                             <div class="doc-name">Owner Operator Lease Agreement</div>
-                            <div class="doc-desc">Standard lease agreement template for onboarding new owner-operators.</div>
+                            <div class="doc-desc">Standard lease agreement for onboarding new owner-operators.</div>
                         </div>
                         <div class="doc-actions"><span class="doc-coming">Link needed</span></div>
                     </div>
@@ -255,6 +293,11 @@
                 document.getElementById('passwordError').classList.add('hidden');
             });
             pwInput.focus();
+            // Register service worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sop-portal/sw.js')
+                    .catch(err => console.log('SW registration failed:', err));
+            }
         });
     </script>
     <script src="app.js"></script>
