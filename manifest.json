@@ -1,0 +1,25 @@
+{
+  "name": "Spot On TMS — Internal Portal",
+  "short_name": "SpotOn TMS",
+  "description": "Spot On Logistics internal portal — SOPs, company policies, roles, and forms.",
+  "start_url": "/sop-portal/",
+  "scope": "/sop-portal/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#0a0f1e",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/sop-portal/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sop-portal/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
