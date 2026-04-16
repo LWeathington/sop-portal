@@ -571,9 +571,11 @@ function goBack() {
 }
 
 function showView(viewId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    // Only hide/show views within the SOP tab — don't touch other tab content
+    document.querySelectorAll('#tabSOP .view').forEach(v => v.classList.add('hidden'));
     document.getElementById(viewId).classList.remove('hidden');
 }
+
 
 // ── SEARCH ────────────────────────────────────────────────────
 function setupSearch() {
