@@ -535,7 +535,6 @@ function openPosition(posId) {
     const pos = currentPosition;
     const grid = document.getElementById('sopListGrid');
 
-    // ── SOP LIST PANEL ──────────────────────────────────────
     const sopCardsHTML = pos.sops.length === 0
         ? `<p style="color:var(--text-secondary);padding:16px 0;">SOPs coming soon.</p>`
         : pos.sops.map(sop => {
@@ -543,7 +542,7 @@ function openPosition(posId) {
             return `
             <div class="sop-card ${available ? '' : 'sop-coming-soon'}"
                  ${available ? `onclick="openSOP('${sop.id}')"` : ''}
-                 style="border-left: 3px solid ${available ? pos.accentColor : 'var(--border)'};">
+                 style="border-left: 3px solid ${available ? pos.accentColor : 'var(--border)'}">
                 <div class="sop-card-title">${sop.title}</div>
                 <div class="sop-card-meta">
                     <span style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
@@ -554,84 +553,22 @@ function openPosition(posId) {
             </div>`;
         }).join('');
 
-    // ── ROLE OVERVIEW PANEL ─────────────────────────────────
-    const roleHTML = `
-    <div class="role-header" style="border-left: 4px solid ${pos.accentColor}">
-        <div class="role-meta">
-            <span class="role-icon">${pos.icon}</span>
-            <div>
-                <div class="role-person">${pos.person}</div>
-                <div class="role-title" style="color:${pos.accentColor}">${pos.personTitle}</div>
-                <div class="role-reports">Reports to: ${pos.reportsTo}</div>
+    grid.innerHTML = `
+        <div class="role-header" style="border-left:4px solid ${pos.accentColor};margin-bottom:24px">
+            <div class="role-meta">
+                <span class="role-icon">${pos.icon}</span>
+                <div>
+                    <div class="role-person">${pos.person}</div>
+                    <div class="role-title" style="color:${pos.accentColor}">${pos.personTitle}</div>
+                    <div class="role-reports">Reports to: ${pos.reportsTo}</div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="job-desc-section">
-        <div class="jd-col">
-            <div class="jd-heading owns-heading">✅ Owns</div>
-            <ul class="jd-list">
-                ${pos.jobDescription.owns.map(i => `<li>${i}</li>`).join('')}
-            </ul>
-        </div>
-        <div class="jd-col">
-            <div class="jd-heading supports-heading">🤝 Supports</div>
-            <ul class="jd-list">
-                ${pos.jobDescription.supports.map(i => `<li>${i}</li>`).join('')}
-            </ul>
-            ${pos.jobDescription.notOwns.length ? `
-            <div class="jd-heading notown-heading" style="margin-top:20px">🚫 Not This Role</div>
-            <ul class="jd-list not-owns">
-                ${pos.jobDescription.notOwns.map(i => `<li>${i}</li>`).join('')}
-            </ul>` : ''}
-        </div>
-    </div>
-
-    ${pos.bpmChart ? `
-    <div class="bpm-section">
-        <div class="section-label" style="color:${pos.accentColor}">📊 Process Flow</div>
-        <div class="mermaid bpm-chart">${pos.bpmChart}</div>
-    </div>` : ''}`;
-
-    // ── ASSEMBLE WITH TABS ──────────────────────────────────
-    grid.innerHTML = `
-        <div class="pos-tabs">
-            <button class="pos-tab active" id="tab-sops" onclick="switchTab('sops')">
-                📋 SOPs (${pos.sops.length})
-            </button>
-            <button class="pos-tab" id="tab-role" onclick="switchTab('role')">
-                👤 Role Overview
-            </button>
-        </div>
-
-        <div class="pos-tab-panel active" id="panel-sops">
-            <div class="sop-list-inner">${sopCardsHTML}</div>
-        </div>
-
-        <div class="pos-tab-panel" id="panel-role">
-            ${roleHTML}
-        </div>
+        <div class="sop-list-inner">${sopCardsHTML}</div>
     `;
-
-    // Render mermaid on role tab only when opened
-    if (typeof mermaid !== 'undefined' && pos.bpmChart) {
-        // Deferred — render when tab is switched to
-        window._pendingMermaid = true;
-    }
 }
 
-function switchTab(tab) {
-    document.querySelectorAll('.pos-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.pos-tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    document.getElementById('panel-' + tab).classList.add('active');
-
-    // Render mermaid chart if switching to role tab
-    if (tab === 'role' && window._pendingMermaid && typeof mermaid !== 'undefined') {
-        window._pendingMermaid = false;
-        mermaid.run({ querySelector: '.mermaid' });
-    }
-}
+function switchTab() {} // stub — tabs removed, kept for safety
 
 // ── OPEN SOP ──────────────────────────────────────────────────
 async function openSOP(sopId) {
@@ -753,6 +690,7 @@ function renderRolesGrid() {
     if (!grid) return;
     grid.innerHTML = POSITIONS.map(pos => {
         const jd = pos.jobDescription;
+        const chartId = `chart-${pos.id}`;
         return `
         <div class="role-accordion" id="accordion-${pos.id}">
             <div class="role-accordion-header" onclick="toggleAccordion('${pos.id}')" style="border-left: 4px solid ${pos.accentColor}">
@@ -777,6 +715,11 @@ function renderRolesGrid() {
                         <ul class="jd-list not-owns">${jd.notOwns.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
                     </div>
                 </div>
+                ${pos.bpmChart ? `
+                <div class="bpm-section" style="margin-top:20px">
+                    <div class="section-label" style="color:${pos.accentColor}">&#128202; Process Flow</div>
+                    <div class="mermaid" id="${chartId}">${pos.bpmChart}</div>
+                </div>` : ''}
             </div>
         </div>`;
     }).join('');
@@ -784,5 +727,14 @@ function renderRolesGrid() {
 
 function toggleAccordion(posId) {
     const el = document.getElementById('accordion-' + posId);
+    const wasOpen = el.classList.contains('open');
     el.classList.toggle('open');
+    // Render mermaid chart when accordion opens (deferred so it has dimensions)
+    if (!wasOpen && typeof mermaid !== 'undefined') {
+        const chartEl = el.querySelector('.mermaid');
+        if (chartEl && !chartEl.dataset.rendered) {
+            chartEl.dataset.rendered = '1';
+            mermaid.run({ nodes: [chartEl] });
+        }
+    }
 }
