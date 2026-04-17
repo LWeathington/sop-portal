@@ -473,6 +473,355 @@ const SOPS = {
       'New customer delays always loop in Tim for relationship management'
     ],
     related: ['customer-onboarding']
+  },
+
+  // ─── DAILY TIME UPDATES ──────────────────────────────────
+  'daily-time-updates': {
+    id: 'daily-time-updates',
+    title: 'Daily Time Updates',
+    category: 'Dispatch Operations',
+    owner: 'Austin Boerckel',
+    version: '1.0',
+    lastUpdated: 'April 2025',
+    purpose: 'To ensure all driver check calls and time updates are recorded accurately and consistently in Ditat TMS throughout the day — so every load has a clear, documented status at all times.',
+    tools: ['Ditat TMS', 'Samsara', 'Phone / Text'],
+    when: [
+      'Every time a driver checks in with an update (departure, en route, arrived, etc.)',
+      'Any time a load status changes — even if the driver didn\'t call, Austin checks',
+      'End of day — all active loads must have a current status before Austin signs off'
+    ],
+    inputs: [
+      'Driver\'s call-in or text with their current status and location',
+      'Samsara GPS to verify location if driver is late to check in',
+      'Ditat load number for the active trip'
+    ],
+    whoItAppliesTo: ['Austin Boerckel (primary)', 'Any dispatcher covering for Austin'],
+    steps: [
+      { partLabel: 'Part A — Driver Check-In Received' },
+      {
+        heading: 'Receive the Update',
+        details: [
+          'Driver calls or texts with their status: departed, en route, arrived at pickup, loaded, en route to delivery, arrived at delivery, delivered/unloaded',
+          'Get: current location (city/state or mile marker), estimated time to next stop, any issues or delays',
+          'If driver is more than 30 minutes past expected check-in time, Austin calls them — do not wait'
+        ]
+      },
+      {
+        heading: 'Log It in Ditat Immediately',
+        details: [
+          'Open Ditat TMS and pull up the driver\'s active trip',
+          'Navigate to the correct stop and update the status (Departed, Arrived, etc.)',
+          'Enter the exact time the driver reported (not the time you entered it)',
+          'Add a trip note with any relevant details: delays, exceptions, customer requests'
+        ],
+        decision: 'Is the driver running late to a customer appointment? → Yes: proceed to Delay Notification SOP immediately before logging.'
+      },
+      { partLabel: 'Part B — Pickup Confirmation' },
+      {
+        heading: 'Pickup Arrived',
+        details: [
+          'Update stop status to "Arrived at Pickup" with driver\'s reported time',
+          'Confirm freight is ready — if driver reports a wait, log it as a trip note with start time',
+          'Excessive wait (over 2 hours): notify customer and document in Ditat'
+        ]
+      },
+      {
+        heading: 'Loaded and Departed',
+        details: [
+          'Update to "Departed Pickup" once driver confirms loaded and en route',
+          'Confirm load count and seal number if applicable',
+          'Calculate ETA to delivery and confirm it\'s within the appointment window',
+          'If ETA is tight, notify delivery customer proactively'
+        ],
+        decision: 'Will driver make the delivery appointment? → No or uncertain: go to Delay Notification SOP now.'
+      },
+      { partLabel: 'Part C — Delivery Confirmation' },
+      {
+        heading: 'Arrived at Delivery',
+        details: [
+          'Update stop status to "Arrived at Delivery" with driver\'s time',
+          'If driver is at a lumper facility, confirm lumper process and cost',
+          'Log any wait time as a trip note'
+        ]
+      },
+      {
+        heading: 'Delivered',
+        details: [
+          'Update stop status to "Delivered"',
+          'Confirm driver received a signed BOL or delivery receipt',
+          'Driver to send POD photo to Austin — Austin forwards to Lindsay for invoicing',
+          'If driver cannot get a signed BOL, document the reason and notify Lindsay immediately'
+        ]
+      },
+      { partLabel: 'Part D — End of Day Wrap-Up' },
+      {
+        heading: 'End of Day Status Check',
+        details: [
+          'Before signing off, pull up all active loads in Ditat',
+          'Every load must have a current, accurate status — no blank or stale entries',
+          'Any driver who hasn\'t checked in by end of day: Austin calls or texts to confirm status',
+          'Tomorrow\'s loads confirmed with drivers the night before or first thing in the morning'
+        ]
+      }
+    ],
+    rules: [
+      'Every driver check-in gets logged in Ditat — no exceptions, no "I\'ll do it later"',
+      'Time entered = driver\'s reported time, NOT the time you type it',
+      'If a driver is 30+ minutes past expected check-in, Austin calls them — don\'t assume',
+      'All active loads have a current status before Austin leaves for the day',
+      'PODs go to Lindsay same day as delivery — no delays on invoicing'
+    ],
+    related: ['delay-notification', 'customer-onboarding']
+  },
+
+  // ─── SUGAR CREEK INCIDENT ESCALATION ────────────────────
+  'sugarcreek-incident-escalation': {
+    id: 'sugarcreek-incident-escalation',
+    title: 'Sugar Creek Incident Escalation',
+    category: 'Operations / Safety',
+    owner: 'Steve Weindorfer',
+    version: '1.0',
+    lastUpdated: 'April 2025',
+    purpose: 'To ensure every incident, equipment failure, or safety issue at the Sugar Creek facility is escalated to the right person at the right level — fast. No one should be guessing who to call.',
+    tools: ['Phone / Text', 'Samsara (equipment tracking)'],
+    when: [
+      'Any equipment failure or breakdown on site',
+      'Any safety incident or near-miss',
+      'Property damage of any kind',
+      'Any situation where operations cannot continue normally'
+    ],
+    inputs: [
+      'Details of the incident: what happened, when, equipment involved, people involved',
+      'Current status: is anyone injured? Is equipment operable? Is the site safe?'
+    ],
+    whoItAppliesTo: [
+      'Night Lead — Level 1 (first response)',
+      'Steve Weindorfer — Level 2 (site manager response)',
+      'Austin Boerckel — Level 3 (operations manager)',
+      'Blake Lappan — Level 4 (owner, major incidents only)'
+    ],
+    steps: [
+      { partLabel: 'Part A — Level 1 (Night Lead Handles)' },
+      {
+        heading: 'Issue Identified On Site',
+        details: [
+          'Night Lead assesses the situation: What happened? Is anyone hurt? Is equipment operable?',
+          'If minor and within normal operations (tire flat, minor mechanical) — Night Lead handles directly',
+          'Night Lead documents the issue in a log or text message to Steve'
+        ],
+        decision: 'Can Night Lead resolve it without disrupting operations? → Yes: handle and document. No: escalate to Level 2 (Steve) immediately.'
+      },
+      { partLabel: 'Part B — Level 2 (Steve Responds)' },
+      {
+        heading: 'Steve Notified — Equipment or Safety Issue',
+        details: [
+          'Night Lead contacts Steve immediately — call or text, do NOT wait until morning',
+          'Steve responds within 15 minutes for equipment failures and property damage (non-negotiable)',
+          'Steve assesses: Can we keep operating? Is the equipment safe to use?',
+          'If equipment is not safe, Steve pulls it from service immediately and notifies Austin'
+        ]
+      },
+      {
+        heading: 'Steve Coordinates Resolution',
+        details: [
+          'Steve contacts Mike Jackson for any equipment/fleet issues that need repair evaluation',
+          'Steve communicates yard status to Austin: what\'s affected, what\'s still operational, ETA on resolution',
+          'Steve documents everything: time of incident, what happened, actions taken, who was notified'
+        ],
+        decision: 'Is this beyond Steve\'s ability to resolve? Or is it a safety incident involving injury or significant property damage? → Yes: escalate to Level 3 (Austin).'
+      },
+      { partLabel: 'Part C — Level 3 (Austin Escalation)' },
+      {
+        heading: 'Austin Notified',
+        details: [
+          'Steve calls Austin directly — do not text for Level 3 escalations, call',
+          'Austin receives: what happened, current status, what Steve has done, what\'s needed',
+          'Austin determines if Blake needs to be looped in (major damage, injury, insurance claim)'
+        ]
+      },
+      {
+        heading: 'Austin Coordinates',
+        details: [
+          'Austin contacts affected customers if load operations are impacted',
+          'Austin coordinates with Mike on equipment repair timeline',
+          'Austin notifies Lindsay if there is any insurance claim or significant financial exposure'
+        ],
+        decision: 'Is this a major incident (injury, significant property damage, insurance claim)? → Yes: Austin contacts Blake immediately.'
+      },
+      { partLabel: 'Part D — After Every Incident' },
+      {
+        heading: 'Document and Report',
+        details: [
+          'Steve submits a written incident summary to Austin within 24 hours',
+          'Summary includes: date/time, what happened, equipment/people involved, immediate response, current status, recommended next steps',
+          'If there are ongoing safety risks, a corrective action plan is required'
+        ]
+      }
+    ],
+    rules: [
+      'Equipment failures and property damage: Steve responds within 15 minutes — no exceptions',
+      'Injury or unsafe site conditions: call Austin immediately — do not wait',
+      'Night Lead cannot escalate directly to Austin — goes through Steve first (except injuries)',
+      'Every incident must be documented in writing, no matter how minor',
+      'Do not put equipment back in service until Steve (or Mike) confirms it\'s safe'
+    ],
+    related: ['maintenance-request', 'delay-notification']
+  },
+
+  // ─── SUGAR CREEK DAILY CHECKLIST ────────────────────────
+  'sugarcreek-daily-checklist': {
+    id: 'sugarcreek-daily-checklist',
+    title: 'Sugar Creek Daily Operations Checklist',
+    category: 'Operations / Sugar Creek',
+    owner: 'Steve Weindorfer',
+    version: '1.0',
+    lastUpdated: 'April 2025',
+    purpose: 'To ensure the Sugar Creek facility starts and ends every day consistently, with a clear picture of equipment status, yard conditions, and anything Austin needs to know before the next shift.',
+    tools: ['Samsara (equipment verification)', 'Phone / Text (daily summary to Austin)'],
+    when: [
+      'Every morning at the start of the shift — before drivers are dispatched',
+      'Every evening before Steve leaves — before the night shift takes over'
+    ],
+    inputs: [
+      'Samsara — equipment locations and any fault codes from overnight',
+      'Previous day\'s notes or any open issues from the last shift'
+    ],
+    whoItAppliesTo: ['Steve Weindorfer (owns this checklist)', 'Night Lead (mirrors the evening checklist)'],
+    steps: [
+      { partLabel: 'Part A — Morning Startup' },
+      {
+        heading: 'Yard Walkthrough',
+        details: [
+          'Walk the entire yard and account for all equipment: trucks, trailers, hostlers',
+          'Compare physical locations to Samsara — flag anything that doesn\'t match',
+          'Check tire conditions on all yard equipment (hostlers especially)',
+          'Look for any damage that wasn\'t there yesterday — document with a photo'
+        ]
+      },
+      {
+        heading: 'Equipment Status Check',
+        details: [
+          'Start each piece of yard equipment and confirm it\'s operational',
+          'Check fuel levels — anything under 1/4 tank gets flagged for refueling before dispatch',
+          'Any fault lights or mechanical issues → notify Mike Jackson immediately',
+          'Confirm all trailers are dock-ready (doors functional, no damage)'
+        ],
+        decision: 'Is any equipment unsafe or non-operational? → Yes: pull from service and notify Mike and Austin before any loads are assigned to that equipment.'
+      },
+      {
+        heading: 'Shift Handoff Review',
+        details: [
+          'Review any notes from the night shift or previous day',
+          'Flags any open issues Austin needs to know about before first dispatch',
+          'Confirm today\'s schedule: loads planned, appointment times, drivers assigned'
+        ]
+      },
+      { partLabel: 'Part B — Throughout the Day' },
+      {
+        heading: 'Monitor Yard Operations',
+        details: [
+          'Be present or accessible during all dock movements',
+          'Confirm freight counts match BOLs on every inbound load',
+          'Any discrepancy or damage: document with photos immediately and notify Austin and Lindsay'
+        ]
+      },
+      {
+        heading: 'Safety Walk (Midday)',
+        details: [
+          'Quick safety check of dock area — clear of hazards, PPE in use, no blocked exits',
+          'Confirm all drivers on site are following safety protocols',
+          'Any safety concerns: address immediately, document, and report to Austin'
+        ]
+      },
+      { partLabel: 'Part C — End of Day Summary' },
+      {
+        heading: 'Final Yard Walkthrough',
+        details: [
+          'Walk the yard before leaving — confirm all equipment is accounted for and secured',
+          'Verify all dock doors are secured',
+          'Any equipment with issues is tagged and noted so night shift knows'
+        ]
+      },
+      {
+        heading: 'Daily Summary to Austin',
+        details: [
+          'Send a text or email to Austin before end of shift every day',
+          'Summary must cover: Equipment status (any issues?), Freight status (anything outstanding?), Safety — anything to note?, Tomorrow — any heads up Austin needs?',
+          'This is not optional — Austin needs this to plan the next day'
+        ]
+      }
+    ],
+    rules: [
+      'Yard walkthrough happens every morning before first dispatch — no exceptions',
+      'Daily summary to Austin goes out before Steve leaves — every single day',
+      'Unsafe equipment is pulled from service before any loads are assigned — no exceptions',
+      'All freight discrepancies and damage are documented with photos same day'
+    ],
+    related: ['sugarcreek-incident-escalation', 'cross-dock-documentation']
+  },
+
+  // ─── 131 RULE ───────────────────────────────────────────
+  'one-three-one-rule': {
+    id: 'one-three-one-rule',
+    title: '131 Rule — How to Bring Decisions to Blake',
+    category: 'Company-Wide / Leadership',
+    owner: 'Whole Team',
+    version: '1.0',
+    lastUpdated: 'April 2025',
+    purpose: 'To eliminate "what should I do?" and replace it with a structured way to bring decisions to Blake when escalation is needed — so every conversation is productive, decisions get made faster, and the team builds decision-making muscle.',
+    when: [
+      'Any time you need Blake\'s approval on something',
+      'Any time you\'re stuck on a problem and need leadership input',
+      'Any major decision outside your normal spending or authority level',
+      'Any situation that might affect customers, cash flow, or compliance'
+    ],
+    whoItAppliesTo: ['Every person on the Spot On team — no exceptions'],
+    steps: [
+      { partLabel: 'The Formula: 1 Problem — 3 Solutions — 1 Recommendation' },
+      {
+        heading: '1 — Define the Problem Clearly',
+        details: [
+          'State the problem in one or two sentences — no background novels',
+          'What specifically do you need Blake to decide?',
+          'What happens if nothing is done? (State the urgency)',
+          'Do NOT come with "I don\'t know what to do" — come with a defined problem'
+        ]
+      },
+      {
+        heading: '3 — Present Three Options',
+        details: [
+          'Give Blake three actual options — not one good one and two garbage fillers',
+          'For each option, include: What it costs or requires, What the likely outcome is, What the risk or downside is',
+          'At least one option should be conservative, one bold',
+          'If you truly can only think of two, explain why the third doesn\'t exist'
+        ]
+      },
+      {
+        heading: '1 — Make a Recommendation',
+        details: [
+          'Tell Blake which option YOU think is the right call and why',
+          'This is the most important part — Blake wants the team thinking, not just presenting',
+          'You might be wrong, and that\'s fine — Blake will correct you. But always have a recommendation.',
+          'This builds your judgment over time. Use it.'
+        ]
+      },
+      { partLabel: 'How to Deliver It' },
+      {
+        heading: 'Verbal or Written — Match the Urgency',
+        details: [
+          'Urgent (same-day decision needed): call Blake or stop by — but still use the 131 format verbally',
+          'Non-urgent: send a quick written summary via text or email with the three options and your recommendation',
+          'Never just dump a problem on Blake\'s plate without options — that\'s not how this works'
+        ]
+      }
+    ],
+    rules: [
+      'No one brings Blake a problem without at least two options and a recommendation',
+      'This applies to everyone — Lindsay, Austin, Tim, Mike, Steve',
+      '"I don\'t know what to do" is not a 131. Come back when you\'ve thought it through.',
+      'Blake can and will override your recommendation — that\'s fine. The goal is the team thinks before escalating.'
+    ],
+    related: ['maintenance-request', 'sugarcreek-incident-escalation']
   }
 
 };
