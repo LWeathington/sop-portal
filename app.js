@@ -221,14 +221,12 @@ graph LR
                 'Primary site management — day-to-day Sugar Creek operations and local customer relations',
                 'Scheduling — ensures all shifts covered, Paychex daily schedules match operational needs',
                 'Driver time card audits and PTO/time-off request verification',
-                'Cross-dock oversight — arrival/departure photos, seal verification, cargo condition checks',
-                'Vendor coordination and warehouse-related payments',
                 'Level 2 incident escalation contact — between night lead and operations manager',
                 'Weekly safety briefs and yard safety walks — PPE and protocol compliance',
                 'Report equipment failures and property damage within 15 minutes',
                 'Daily operational summary to Austin Boerckel',
                 'Physical yard walkthroughs to verify equipment location and condition vs. Samsara',
-                'Communication of yard delays and inbound/outbound workflow crises to leadership'
+                'Communication of yard delays and workflow crises to leadership'
             ],
             supports: [
                 'Austin — driver coordination and load status at Sugar Creek',
@@ -264,6 +262,7 @@ graph LR
                 'Equipment status tracking — Samsara faults, DVIRs, mileage checks',
                 'Auto-approve repairs under $500',
                 'Repair documentation — send paperwork to Lindsay after completion',
+                'Cross-dock operations — oversight of receiving, staging, and freight transfers',
                 '🤖 Mon–Thu (Secondary): Automation & AI projects — after fleet tasks are handled',
                 '🏠 Friday (WFH): Work from home — required Sugar Creek check-in to confirm operations are running smoothly and no one needs help',
             ],
