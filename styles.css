@@ -390,7 +390,50 @@ html, body {
     width: 48px;
 }
 
+/* ---------- Position View Tabs ---------- */
+.pos-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+}
+
+.pos-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid transparent;
+    border-bottom: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    background: transparent;
+    transition: all 0.18s;
+    position: relative;
+    bottom: -1px;
+}
+
+.pos-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+.pos-tab.active {
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border-color: var(--border);
+    border-bottom-color: var(--bg-card);
+}
+
+.pos-tab-panel { display: none; }
+.pos-tab-panel.active { display: block; }
+
 /* ---------- Role Header ---------- */
+
 .role-header {
     background: var(--bg-card);
     border: 1px solid var(--border);
