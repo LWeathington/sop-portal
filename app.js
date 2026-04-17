@@ -425,7 +425,6 @@ function renderHomeTiles() {
              style="border-top: 3px solid ${pos.accentColor}; background: ${pos.tileBg};">
             <span class="tile-icon">${pos.icon}</span>
             <div class="tile-name">${pos.name}</div>
-            <div class="tile-person" style="color:${pos.accentColor}">${pos.person}</div>
             <div class="tile-desc">${pos.desc}</div>
             <span class="tile-count" style="background:${pos.accentColor}22;color:${pos.accentColor};">
                 ${sopCount} SOP${sopCount !== 1 ? 's' : ''}
