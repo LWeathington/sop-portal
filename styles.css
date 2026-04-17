@@ -874,3 +874,161 @@ html, body {
 @media (max-width: 480px) {
     .tiles-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Employee Portal ────────────────────────────────────────── */
+.emp-welcome {
+    text-align: center;
+    padding: 40px 20px 32px;
+}
+.emp-welcome-emoji { font-size: 3rem; margin-bottom: 12px; }
+.emp-welcome-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+.emp-welcome-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.emp-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto 48px;
+}
+
+.emp-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+.emp-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.emp-tile-icon { font-size: 3rem; display: block; margin-bottom: 16px; }
+.emp-tile-name { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.emp-tile-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 18px; }
+.emp-tile-count {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+}
+
+.emp-role-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 8px;
+}
+
+.emp-contact-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0 48px;
+}
+.emp-contact-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+.emp-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+.emp-contact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+}
+.emp-contact-role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+.emp-contact-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+.emp-contact-detail {
+    font-size: 0.78rem;
+    color: var(--accent-cyan);
+    text-decoration: none;
+    display: block;
+}
+.emp-contact-detail:hover { text-decoration: underline; }
+
+.doc-note {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.doc-coming {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+/* Role accordion (Roles & Responsibilities tab) */
+.role-accordion {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.role-accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.role-accordion-header:hover { background: rgba(255,255,255,0.03); }
+.role-accordion-icon { font-size: 1.6rem; flex-shrink: 0; }
+.role-accordion-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.role-accordion-person { font-size: 0.8rem; margin-top: 2px; }
+.role-accordion-chevron { margin-left: auto; color: var(--text-muted); transition: transform 0.2s; }
+.role-accordion.open .role-accordion-chevron { transform: rotate(180deg); }
+.role-accordion-body { display: none; padding: 0 22px 22px; }
+.role-accordion.open .role-accordion-body { display: block; }
+
+@media (max-width: 600px) {
+    .emp-tiles-grid { grid-template-columns: 1fr; }
+    .emp-contact-grid { grid-template-columns: 1fr 1fr; }
+    .emp-welcome-title { font-size: 1.5rem; }
+}
