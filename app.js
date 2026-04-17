@@ -207,10 +207,14 @@ graph TD
         },
         bpmChart: null,
         sops: [
-            { id: 'cross-dock-operations',                title: 'Cross-Dock Operations',                    file: 'sops/cross-dock-operations.md' },
-            { id: 'cross-dock-documentation',             title: 'Cross-Dock Documentation Flow',            viewer: true },
             { id: 'sugarcreek-daily-checklist',           title: 'Sugar Creek Daily Operations Checklist',   viewer: true },
             { id: 'sugarcreek-incident-escalation',       title: 'Sugar Creek Incident Escalation',          viewer: true },
+            { id: 'cargill-operations-sop',               title: 'Cargill Operations SOP',                   url: 'https://docs.google.com/document/d/1n63lDvgGmjLfGTEwd5FHc0f75eUQpEQqBJRYHgTlUAM/edit' },
+            { id: 'empire-operations-sop',                title: 'Empire Operations SOP',                    url: 'https://docs.google.com/document/d/1O-V_3ZfzbxHpaH4hHMME6SGecK1Bn2T4YUOdhWzWPZM/edit' },
+            { id: 'cross-dock-operations',                title: 'Cross-Dock Operations',                    file: 'sops/cross-dock-operations.md' },
+            { id: 'cross-dock-documentation',             title: 'Cross-Dock Documentation Flow',            viewer: true },
+            { id: 'orientation-sop-spotters',             title: 'Orientation SOP — Spotters',               url: 'https://docs.google.com/document/d/1PCE8YcVnxVEx9ahw0ssdC0fGWe3Z1K54Pb2hXraC2l0/edit' },
+            { id: 'accident-report-form',                 title: 'Accident Report Form',                     url: 'https://docs.google.com/forms/d/1BMTMwgTv02yaC8YrEsxZVajjWmdA70LK/viewform' },
         ]
     },
     {
@@ -459,6 +463,10 @@ const SOP_ICONS = {
     'cross-dock-documentation'             : '📄',
     'sugarcreek-daily-checklist'           : '✅',
     'sugarcreek-incident-escalation'       : '🚨',
+    'cargill-operations-sop'               : '🏗️',
+    'empire-operations-sop'                : '🏭',
+    'orientation-sop-spotters'             : '🪪',
+    'accident-report-form'                 : '📋',
     'customer-onboarding'                  : '🤝',
     'fleet-maintenance-request'            : '🔧',
     'equipment-repair-approval'            : '💵',
@@ -521,6 +529,12 @@ function switchTab() {} // stub — kept for safety
 async function openSOP(sopId) {
     const sop = currentPosition ? currentPosition.sops.find(s => s.id === sopId) : null;
     if (!sop) return;
+
+    // URL-based SOPs (Google Drive links) — open directly
+    if (sop.url) {
+        window.open(sop.url, '_blank');
+        return;
+    }
 
     // New viewer-based SOPs open in sop-viewer.html
     if (sop.viewer) {
