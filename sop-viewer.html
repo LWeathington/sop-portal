@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP — Spot On TMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:       #0a0f1e;
+            --card:     #111827;
+            --border:   #1e2d45;
+            --text:     #f0f4ff;
+            --muted:    #94a3b8;
+            --dim:      #4a5568;
+            --blue:     #3b82f6;
+            --green:    #10b981;
+            --orange:   #f97316;
+            --red:      #ef4444;
+            --amber:    #f59e0b;
+            --purple:   #a855f7;
+            --cyan:     #06b6d4;
+            --teal:     #14b8a6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── NAV ─── */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 64px;
+            background: #0d1424;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            gap: 12px;
+        }
+
+        .logo { font-size: 1.1rem; font-weight: 800; white-space: nowrap; }
+        .logo span { color: var(--cyan); }
+
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-ghost {
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .btn-primary {
+            color: #fff;
+            background: var(--blue);
+        }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-green {
+            color: #fff;
+            background: var(--green);
+        }
+        .btn-green:hover { background: #059669; }
+
+        /* ─── LAYOUT ─── */
+        .page { max-width: 860px; margin: 0 auto; padding: 48px 32px 80px; }
+
+        /* ─── SOP HEADER ─── */
+        .sop-header {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            border-left: 5px solid var(--blue);
+        }
+
+        .sop-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--blue);
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.25);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .sop-title {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .sop-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        .sop-meta-item { display: flex; align-items: center; gap: 6px; }
+        .sop-meta-item strong { color: var(--text); }
+
+        /* ─── SECTION CARD ─── */
+        .sop-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+
+        .sop-section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sop-section p {
+            font-size: 0.9rem;
+            color: #c8d4e8;
+            line-height: 1.7;
+        }
+
+        .sop-section ul {
+            list-style: none;
+            font-size: 0.88rem;
+            color: #c8d4e8;
+            line-height: 1.7;
+        }
+
+        .sop-section ul li {
+            display: flex;
+            gap: 10px;
+            padding: 4px 0;
+        }
+
+        .sop-section ul li::before {
+            content: '→';
+            color: var(--blue);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ─── STEPS ─── */
+        .steps-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .step {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(59,130,246,0.15);
+            border: 2px solid rgba(59,130,246,0.4);
+            color: var(--blue);
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-body { flex: 1; }
+
+        .step-heading {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .step-details {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .step-details li {
+            display: flex;
+            gap: 8px;
+            padding: 2px 0;
+        }
+
+        .step-details li::before {
+            content: '·';
+            color: var(--dim);
+            flex-shrink: 0;
+        }
+
+        /* ─── RULES ─── */
+        .rules-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+        .rules-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: rgba(239,68,68,0.06);
+            border: 1px solid rgba(239,68,68,0.15);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.86rem;
+            color: #c8d4e8;
+            line-height: 1.5;
+        }
+
+        .rules-list li::before {
+            content: '⚠';
+            color: var(--amber);
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            margin-top: 1px;
+        }
+
+        /* ─── RELATED ─── */
+        .related-links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .related-link {
+            color: var(--blue);
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .related-link:hover { background: rgba(59,130,246,0.2); }
+
+        /* ─── NOT FOUND ─── */
+        .not-found {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--muted);
+        }
+        .not-found h2 { font-size: 1.5rem; color: var(--text); margin-bottom: 8px; }
+
+        /* ─── PRINT STYLES ─── */
+        @media print {
+            body { background: #fff; color: #000; }
+            .top-bar, .nav-actions, .print-hide { display: none !important; }
+            .sop-header { border-left-color: #000; background: #f9f9f9; border: 1px solid #ccc; }
+            .sop-section { background: #fff; border: 1px solid #ccc; break-inside: avoid; }
+            .step { break-inside: avoid; }
+            .sop-title { color: #000; }
+            .sop-meta, .sop-category, .sop-section-label { color: #333; }
+            .sop-section p, .sop-section ul, .step-details, .step-heading { color: #222; }
+            .step-number { background: #eee; border-color: #999; color: #000; }
+            .rules-list li { background: #fff8f0; border-color: #f59e0b; color: #000; }
+            .rules-list li::before { color: #f59e0b; }
+        }
+
+        @media (max-width: 600px) {
+            .top-bar { padding: 0 16px; }
+            .page { padding: 24px 16px 60px; }
+            .sop-title { font-size: 1.4rem; }
+            .sop-header { padding: 20px; }
+            .sop-section { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-bar">
+    <div class="logo">Spot On <span>TMS</span></div>
+    <div class="nav-actions">
+        <a href="index.html" class="btn btn-ghost print-hide">&#8592; Portal</a>
+        <button class="btn btn-green print-hide" onclick="window.print()">&#8681; Download / Print</button>
+    </div>
+</nav>
+
+<div class="page" id="sop-container">
+    <div class="not-found">
+        <h2>Loading SOP...</h2>
+        <p>If this takes more than a second, the SOP ID may be missing or incorrect.</p>
+    </div>
+</div>
+
+<script src="sops.js"></script>
+<script>
+    function getSopId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+
+    function getSopTitle(id) {
+        const sop = SOPS[id];
+        return sop ? sop.title : id;
+    }
+
+    function renderSop(sop) {
+        document.title = `${sop.title} — Spot On TMS`;
+
+        const relatedLinks = (sop.related || []).map(id =>
+            `<span class="related-link" onclick="loadSop('${id}')">${getSopTitle(id)}</span>`
+        ).join('');
+
+        const whoList = (sop.whoItAppliesTo || []).map(w => `<li>${w}</li>`).join('');
+
+        const steps = (sop.steps || []).map((s, i) => `
+            <div class="step">
+                <div class="step-number">${i + 1}</div>
+                <div class="step-body">
+                    <div class="step-heading">${s.heading}</div>
+                    <ul class="step-details">
+                        ${s.details.map(d => `<li>${d}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `).join('');
+
+        const rules = (sop.rules || []).map(r => `<li>${r}</li>`).join('');
+
+        document.getElementById('sop-container').innerHTML = `
+            <div class="sop-header">
+                <div class="sop-category">${sop.category}</div>
+                <h1 class="sop-title">${sop.title}</h1>
+                <div class="sop-meta">
+                    <div class="sop-meta-item">👤 <strong>Owner:</strong>&nbsp;${sop.owner}</div>
+                    <div class="sop-meta-item">📅 <strong>Last Updated:</strong>&nbsp;${sop.lastUpdated}</div>
+                    <div class="sop-meta-item">🔖 <strong>Version:</strong>&nbsp;${sop.version}</div>
+                </div>
+            </div>
+
+            <div class="sop-section">
+                <div class="sop-section-label">Purpose</div>
+                <p>${sop.purpose}</p>
+            </div>
+
+            <div class="sop-section">
+                <div class="sop-section-label">Scope</div>
+                <p>${sop.scope}</p>
+            </div>
+
+            ${whoList ? `
+            <div class="sop-section">
+                <div class="sop-section-label">Who This Applies To</div>
+                <ul>${whoList}</ul>
+            </div>` : ''}
+
+            <div class="sop-section">
+                <div class="sop-section-label">Process Steps</div>
+                <div class="steps-list">${steps}</div>
+            </div>
+
+            ${rules ? `
+            <div class="sop-section">
+                <div class="sop-section-label">Key Rules — Non-Negotiable</div>
+                <ul class="rules-list">${rules}</ul>
+            </div>` : ''}
+
+            ${relatedLinks ? `
+            <div class="sop-section">
+                <div class="sop-section-label">Related SOPs</div>
+                <div class="related-links">${relatedLinks}</div>
+            </div>` : ''}
+        `;
+    }
+
+    function loadSop(id) {
+        if (!id) {
+            document.getElementById('sop-container').innerHTML = `
+                <div class="not-found">
+                    <h2>No SOP specified</h2>
+                    <p>Return to the <a href="index.html" style="color:var(--blue);">portal</a> and click an SOP link.</p>
+                </div>`;
+            return;
+        }
+
+        const sop = SOPS[id];
+        if (!sop) {
+            document.getElementById('sop-container').innerHTML = `
+                <div class="not-found">
+                    <h2>SOP Not Found</h2>
+                    <p>No SOP with ID "<strong>${id}</strong>" exists. <a href="index.html" style="color:var(--blue);">Back to portal</a>.</p>
+                </div>`;
+            return;
+        }
+
+        // Update URL without reload so back button works
+        history.pushState({id}, '', `?id=${id}`);
+        renderSop(sop);
+        window.scrollTo(0, 0);
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', (e) => {
+        if (e.state && e.state.id) loadSop(e.state.id);
+    });
+
+    // Initial load
+    loadSop(getSopId());
+</script>
+</body>
+</html>
