@@ -70,35 +70,41 @@ graph TD
     },
     {
         id: 'accounting',
-        name: 'Accounting & Finance',
+        name: 'Accounting & HR',
         person: 'Lindsay Weathington',
-        personTitle: 'Accounting Manager',
+        personTitle: 'Accounting Manager & HR',
         reportsTo: 'Blake Lappan',
         icon: '💼',
-        desc: 'Invoicing, accounts receivable, payroll, QuickBooks workflows, and compliance paperwork.',
+        desc: 'Invoicing, accounts receivable, payroll, QuickBooks, driver hiring, onboarding, compliance files, and HR.',
         accentColor: '#10b981',
         tileBg: 'linear-gradient(135deg, #0a2a1a 0%, #071510 100%)',
         jobDescription: {
             owns: [
                 'Accounts Receivable — QB automated emails, collections, and follow-up',
                 'Accounts Payable — bill pay on set schedule, vendor management',
-                'Payroll processing (transitioning to QB/ADP)',
+                'Payroll processing (via Paychex)',
                 'QuickBooks invoicing, billing reconciliation, and reporting',
                 'Fuel reports — weekly compilation and distribution',
-                'Driver compliance paperwork — policy acknowledgement forms for violations',
-                'Fleet paperwork — tag renewals, vehicle registration, and compliance docs (NEW)',
                 'Maintenance spend approvals — $500–$2,500 threshold (cash flow check)',
-                'Weekly cash flow monitoring and flagging to Blake'
+                'Weekly cash flow monitoring and flagging to Blake',
+                'New driver compliance file — Lindsay creates and maintains DQF',
+                'Policy acknowledgement forms — Lindsay collects all signatures',
+                'Benefits enrollment (via Paychex)',
+                'New hire docs and onboarding manuals — Lindsay maintains',
+                'Fleet paperwork — tag renewals, vehicle registration, compliance docs',
+                'Driver compliance paperwork — policy acknowledgement for violations'
             ],
             supports: [
+                'Austin — driver compliance forms, dispatch coordination, and POD confirmation',
                 'Mike — maintenance spend approvals and repair documentation',
-                'Austin — driver compliance forms and POD confirmation',
-                'Blake — cash flow visibility and financial reporting'
+                'Blake — final hiring approval, cash flow visibility, and financial reporting'
             ],
             notOwns: [
-                'Physical fleet repairs — Austin/Mike coordinate, Lindsay handles paperwork only',
-                'Dispatching loads — Austin',
-                'Driver scheduling — Austin'
+                'Final hiring/firing decisions → Blake',
+                'Compensation decisions → Blake',
+                'Physical fleet repairs → Austin/Mike coordinate, Lindsay handles paperwork only',
+                'Dispatching loads → Austin',
+                'Driver scheduling → Austin'
             ]
         },
         bpmChart: `
@@ -108,8 +114,8 @@ graph TD
     C --> D["Lindsay: Create Invoice in QB"]
     D --> E["QB: Auto AR Email to Customer"]
     E --> F{Payment Received?}
-    F -->|Yes| G["Lindsay: Post Payment in QB"]
-    F -->|No - 30 days| H["Lindsay: Follow-Up per AR SOP"]
+    F --> |Yes| G["Lindsay: Post Payment in QB"]
+    F --> |No - 30 days| H["Lindsay: Follow-Up per AR SOP"]
     H --> F
     style A fill:#0f2040,color:#fff,stroke:#3b82f6
     style G fill:#0a2a1a,color:#fff,stroke:#10b981
@@ -117,12 +123,16 @@ graph TD
         sops: [
             { id: 'sop-bill-empire-mondays',          title: 'SOP: Bill Empire (Mondays)',                 file: 'sops/sop-bill-empire-mondays.md' },
             { id: 'how-to-attach-and-invoice-ditat',  title: 'Attach Documents & Process Invoices in Ditat', file: 'sops/how-to-attach-documents-and-process-invoices-in-ditat-tms.md' },
-            { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
             { id: 'ar-collections-process',           title: 'AR Collections Process',                     file: 'sops/ar-collections-process.md' },
             { id: 'qb-invoice-creation',              title: 'QB Invoice Creation',                        file: 'sops/qb-invoice-creation.md' },
+            { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
+            { id: 'fleet-compliance',                 title: 'Fleet Compliance & Renewal Calendar',        viewer: true },
             { id: 'driver-hiring',                    title: 'Driver Hiring Process',                      viewer: true },
             { id: 'driver-onboarding',                title: 'Driver Onboarding & DQF File Creation',     viewer: true },
-            { id: 'fleet-compliance',                 title: 'Fleet Compliance & Renewal Calendar',        viewer: true },
+            { id: 'onboarding',                       title: 'General Employee Onboarding',                file: 'sops/onboarding.md' },
+            { id: 'adding-new-driver-to-ditat',       title: 'Adding a New Driver to Ditat',               file: 'sops/adding-new-driver-to-ditat.md' },
+            { id: 'adding-new-driver-to-samsara',     title: 'Adding a New Driver to Samsara',             file: 'sops/adding-new-driver-to-samsara.md' },
+            { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
         ]
     },
     {
@@ -362,59 +372,6 @@ graph TD
             { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
             { id: 'maintenance-request',              title: 'Equipment Maintenance Request Process',      viewer: true },
             { id: 'cross-dock-documentation',         title: 'Cross-Dock Documentation Flow',             viewer: true },
-        ]
-    },
-    {
-        id: 'hr',
-        name: 'HR & Onboarding',
-        person: 'Austin + Lindsay',
-        personTitle: 'Shared Responsibility',
-        reportsTo: 'Blake Lappan',
-        icon: '🤝',
-        desc: 'Hiring, driver orientation, employee onboarding, benefits, and HR compliance.',
-        accentColor: '#a855f7',
-        tileBg: 'linear-gradient(135deg, #200a30 0%, #100517 100%)',
-        jobDescription: {
-            owns: [
-                'Hiring SOP — Austin screens in Tenstreet (2+ years experience required)',
-                'Road test and drug screen coordination — Austin (Express Labs)',
-                'New driver compliance file — Lindsay creates and maintains',
-                'Policy acknowledgement forms — Lindsay collects signatures',
-                'Driver added to Ditat + Samsara — Austin',
-                'Benefits enrollment — Lindsay (via Paychex / transitioning)',
-                'New hire docs and onboarding manuals — Lindsay maintains',
-                'Orientation package — goal is one place for all onboarding materials'
-            ],
-            supports: [
-                'Blake — final hiring approval and offer letters',
-                'Mike — Sugar Creek and facility-specific orientation'
-            ],
-            notOwns: [
-                'Final hiring/firing decisions → Blake',
-                'Compensation decisions → Blake'
-            ]
-        },
-        bpmChart: `
-graph TD
-    A["Need Identified (Austin/Blake)"] --> B["Austin: Post in Tenstreet"]
-    B --> C["Austin: Screen Applicants<br/>(2+ years required)"]
-    C --> D["Austin: Road Test + Drug Screen<br/>(Express Labs)"]
-    D --> E{Pass?}
-    E -->|No| F["Austin: Notify Applicant"]
-    E -->|Yes| G["Blake: Final Approval & Offer"]
-    G --> H["Lindsay: Create Compliance File<br/>Collect Policy Forms"]
-    H --> I["Austin: Add to Ditat + Samsara"]
-    I --> J["Austin: First Dispatch Briefing"]
-    style A fill:#1a0520,color:#fff,stroke:#a855f7
-    style J fill:#0f2040,color:#fff,stroke:#3b82f6
-`,
-        sops: [
-            { id: 'onboarding',                       title: 'General Onboarding',                         file: 'sops/onboarding.md' },
-            { id: 'adding-new-driver-to-ditat',       title: 'Adding a New Driver to Ditat',               file: 'sops/adding-new-driver-to-ditat.md' },
-            { id: 'adding-new-driver-to-samsara',     title: 'Adding a New Driver to Samsara',             file: 'sops/adding-new-driver-to-samsara.md' },
-            { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
-            { id: 'driver-hiring',                    title: 'Driver Hiring Process',                      viewer: true },
-            { id: 'driver-onboarding',                title: 'Driver Onboarding & DQF File Creation',     viewer: true },
         ]
     },
     {
