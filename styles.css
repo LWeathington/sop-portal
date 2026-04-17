@@ -562,20 +562,18 @@ html, body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-}
-
-.sop-tile {
+}.sop-tile {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 16px 20px;
+    border-radius: 14px;
+    padding: 20px 14px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     cursor: pointer;
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    height: 190px;
+    aspect-ratio: 1;
     position: relative;
     overflow: hidden;
 }
@@ -586,7 +584,7 @@ html, body {
     top: 0; left: 0; right: 0;
     height: 3px;
     background: var(--tile-accent, var(--border));
-    border-radius: 16px 16px 0 0;
+    border-radius: 14px 14px 0 0;
 }
 
 .sop-tile:hover {
@@ -596,18 +594,18 @@ html, body {
 }
 
 .sop-tile-icon {
-    font-size: 2.2rem;
-    margin-bottom: 14px;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
     line-height: 1;
 }
 
 .sop-tile-title {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--text-primary);
-    line-height: 1.4;
+    line-height: 1.35;
     flex: 1;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -615,7 +613,7 @@ html, body {
 }
 
 .sop-tile-status {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -626,6 +624,8 @@ html, body {
     cursor: default;
 }
 .sop-tile-soon:hover { transform: none; box-shadow: none; }
+
+
 
 /* Legacy class — kept for search compat */
 .sop-list-inner { display: contents; }
