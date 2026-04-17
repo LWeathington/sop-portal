@@ -209,8 +209,8 @@ graph LR
     {
         id: 'sugarcreek',
         name: 'Sugar Creek',
-        person: 'Mike Jackson',
-        personTitle: 'Sugar Creek / Cross-Dock Manager',
+        person: 'Steve Weindorfer',
+        personTitle: 'Sugar Creek Manager',
         reportsTo: 'Blake Lappan',
         icon: '🏭',
         desc: 'Sugar Creek facility operations, cross-dock coordination, and site management.',
@@ -222,20 +222,23 @@ graph LR
                 'Cross-dock operations — receiving, staging, and transfer coordination',
                 'Site communication with drivers and facility contacts',
                 'Equipment and trailer status at Sugar Creek site',
+                'Driver coordination at Sugar Creek',
                 'Reporting site issues to Blake and Austin'
             ],
             supports: [
-                'Austin — driver coordination at Sugar Creek',
-                'Lindsay — site-related paperwork and compliance'
+                'Austin — driver coordination and load status at Sugar Creek',
+                'Lindsay — site-related paperwork and compliance',
+                'Mike — flagging any equipment or fleet issues at the site'
             ],
             notOwns: [
+                'Fleet maintenance and repair decisions → Mike Jackson',
                 'Load booking and freight rates → Austin / Tim',
                 'Invoicing → Lindsay'
             ]
         },
         bpmChart: null,
         sops: [
-            { id: 'cross-dock-operations',            title: 'Cross-Dock Operations',                      file: 'sops/cross-dock-operations.md' },
+            { id: 'cross-dock-operations', title: 'Cross-Dock Operations', file: 'sops/cross-dock-operations.md' },
         ]
     },
     {
@@ -245,28 +248,31 @@ graph LR
         personTitle: 'Fleet Maintenance Manager',
         reportsTo: 'Blake Lappan',
         icon: '🔧',
-        desc: 'All fleet repairs, maintenance requests, vendor coordination, and equipment tracking.',
+        desc: 'All fleet repairs, maintenance requests, vendor coordination, equipment tracking, and automation projects.',
         accentColor: '#fb923c',
         tileBg: 'linear-gradient(135deg, #2a1006 0%, #180800 100%)',
         jobDescription: {
             owns: [
-                'Fleet maintenance and repairs — full ownership of all equipment',
-                'Maintenance request intake — evaluate, prioritize, and schedule',
-                'Vendor coordination — shop relationships, getting quotes',
-                'Equipment status tracking — Samsara faults, DVIRs, mileage',
+                '🗓️ Mon–Thu (On-Site): Fleet maintenance is the PRIMARY focus',
+                'Maintenance request intake — evaluate, prioritize, and schedule all repairs',
+                'Vendor coordination — shop relationships and getting repair quotes',
+                'Equipment status tracking — Samsara faults, DVIRs, mileage checks',
                 'Auto-approve repairs under $500',
-                'Automation and AI projects (future — after fleet maintenance is solid)',
-                'Repair documentation — providing paperwork to Lindsay after completion'
+                'Repair documentation — send paperwork to Lindsay after completion',
+                '🤖 Mon–Thu (Secondary): Automation & AI projects — after fleet tasks are handled',
+                '🏠 Friday (WFH): Work from home — required Sugar Creek check-in to confirm operations are running smoothly and no one needs help',
             ],
             supports: [
                 'Lindsay — spend approval requests ($500–$2,500 threshold)',
                 'Austin — coordinating driver drop-offs at shops',
+                'Steve (Sugar Creek) — fleet and equipment issues flagged at the site',
                 'Blake — equipment investment analysis and recommendations'
             ],
             notOwns: [
                 'Spend approval for repairs $500–$2,500 → Lindsay signs off',
                 'Spend approval above $2,500 → Blake final',
                 'Tag renewals and registration paperwork → Lindsay Weathington',
+                'Sugar Creek daily operations → Steve Weindorfer',
                 'Dispatching trucks → Austin'
             ]
         },
