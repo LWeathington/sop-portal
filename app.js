@@ -422,13 +422,9 @@ function renderHomeTiles() {
         const sopCount = pos.sops.length;
         return `
         <div class="position-tile" onclick="openPosition('${pos.id}')"
-             style="border-top: 3px solid ${pos.accentColor}; background: ${pos.tileBg};">
+             style="border-top: 3px solid ${pos.accentColor}; background: ${pos.tileBg}; text-align:center; align-items:center;">
             <span class="tile-icon">${pos.icon}</span>
             <div class="tile-name">${pos.name}</div>
-            <div class="tile-desc">${pos.desc}</div>
-            <span class="tile-count" style="background:${pos.accentColor}22;color:${pos.accentColor};">
-                ${sopCount} SOP${sopCount !== 1 ? 's' : ''}
-            </span>
         </div>`;
     }).join('');
 }
