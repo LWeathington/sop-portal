@@ -255,6 +255,72 @@
             margin-top: 1px;
         }
 
+        /* ─── TOOLS ─── */
+        .tools-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.25);
+            color: var(--cyan);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* ─── WHEN / INPUTS ─── */
+        .when-list, .inputs-list {
+            list-style: none;
+            font-size: 0.88rem;
+            color: #c8d4e8;
+            line-height: 1.7;
+        }
+        .when-list li, .inputs-list li {
+            display: flex;
+            gap: 10px;
+            padding: 3px 0;
+        }
+        .when-list li::before { content: '🕐'; flex-shrink: 0; }
+        .inputs-list li::before { content: '📋'; flex-shrink: 0; }
+
+        /* ─── PARTS ─── */
+        .part-block { margin-bottom: 24px; }
+        .part-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: var(--blue);
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 6px;
+            padding: 5px 12px;
+            margin-bottom: 14px;
+            display: inline-block;
+        }
+
+        /* ─── DECISION POINTS ─── */
+        .decision-point {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: rgba(245,158,11,0.07);
+            border: 1px solid rgba(245,158,11,0.25);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin: 10px 0 4px 52px;
+            font-size: 0.85rem;
+            color: #e8d4a0;
+            line-height: 1.55;
+        }
+        .decision-point::before {
+            content: '🔀';
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
         /* ─── RELATED ─── */
         .related-links { display: flex; flex-wrap: wrap; gap: 8px; }
 
@@ -333,6 +399,30 @@
         return sop ? sop.title : id;
     }
 
+    function renderSteps(steps) {
+        let stepNum = 1;
+        return (steps || []).map(s => {
+            if (s.partLabel) {
+                stepNum = 1;
+                return `<div class="part-label">${s.partLabel}</div>`;
+            }
+            const decisionHTML = s.decision
+                ? `<div class="decision-point">${s.decision}</div>` : '';
+            const html = `
+                <div class="step">
+                    <div class="step-number">${stepNum}</div>
+                    <div class="step-body">
+                        <div class="step-heading">${s.heading}</div>
+                        <ul class="step-details">
+                            ${(s.details || []).map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>${decisionHTML}`;
+            stepNum++;
+            return html;
+        }).join('');
+    }
+
     function renderSop(sop) {
         document.title = `${sop.title} — Spot On TMS`;
 
@@ -340,21 +430,12 @@
             `<span class="related-link" onclick="loadSop('${id}')">${getSopTitle(id)}</span>`
         ).join('');
 
-        const whoList = (sop.whoItAppliesTo || []).map(w => `<li>${w}</li>`).join('');
-
-        const steps = (sop.steps || []).map((s, i) => `
-            <div class="step">
-                <div class="step-number">${i + 1}</div>
-                <div class="step-body">
-                    <div class="step-heading">${s.heading}</div>
-                    <ul class="step-details">
-                        ${s.details.map(d => `<li>${d}</li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-        `).join('');
-
-        const rules = (sop.rules || []).map(r => `<li>${r}</li>`).join('');
+        const whoList    = (sop.whoItAppliesTo || []).map(w => `<li>${w}</li>`).join('');
+        const toolBadges = (sop.tools  || []).map(t => `<span class="tool-badge">🔧 ${t}</span>`).join('');
+        const whenItems  = (sop.when   || []).map(w => `<li>${w}</li>`).join('');
+        const inputItems = (sop.inputs || []).map(i => `<li>${i}</li>`).join('');
+        const rules      = (sop.rules  || []).map(r => `<li>${r}</li>`).join('');
+        const stepsHTML  = renderSteps(sop.steps);
 
         document.getElementById('sop-container').innerHTML = `
             <div class="sop-header">
@@ -372,10 +453,23 @@
                 <p>${sop.purpose}</p>
             </div>
 
+            ${toolBadges ? `
             <div class="sop-section">
-                <div class="sop-section-label">Scope</div>
-                <p>${sop.scope}</p>
-            </div>
+                <div class="sop-section-label">Tools Used</div>
+                <div class="tools-list">${toolBadges}</div>
+            </div>` : ''}
+
+            ${whenItems ? `
+            <div class="sop-section">
+                <div class="sop-section-label">When to Do This</div>
+                <ul class="when-list">${whenItems}</ul>
+            </div>` : ''}
+
+            ${inputItems ? `
+            <div class="sop-section">
+                <div class="sop-section-label">What You Need First</div>
+                <ul class="inputs-list">${inputItems}</ul>
+            </div>` : ''}
 
             ${whoList ? `
             <div class="sop-section">
@@ -385,7 +479,7 @@
 
             <div class="sop-section">
                 <div class="sop-section-label">Process Steps</div>
-                <div class="steps-list">${steps}</div>
+                <div class="steps-list">${stepsHTML}</div>
             </div>
 
             ${rules ? `
