@@ -64,6 +64,7 @@ graph TD
             { id: 'searching-for-backhaul',           title: 'Searching for and Securing a Backhaul Load', file: 'sops/searching-for-and-securing-a-backhaul-load.md' },
             { id: 'samsara-violation-review',         title: 'Samsara Violation Daily Review',             file: 'sops/samsara-violation-daily-review.md' },
             { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
+            { id: 'daily-time-updates',               title: 'Daily Time Updates',                         viewer: true },
             { id: 'delay-notification',               title: 'Proactive Customer Delay Notification',      viewer: true },
         ]
     },
@@ -244,8 +245,10 @@ graph LR
         },
         bpmChart: null,
         sops: [
-            { id: 'cross-dock-operations',            title: 'Cross-Dock Operations',                     file: 'sops/cross-dock-operations.md' },
-            { id: 'cross-dock-documentation',         title: 'Cross-Dock Documentation Flow',             viewer: true },
+            { id: 'cross-dock-operations',                title: 'Cross-Dock Operations',                    file: 'sops/cross-dock-operations.md' },
+            { id: 'cross-dock-documentation',             title: 'Cross-Dock Documentation Flow',            viewer: true },
+            { id: 'sugarcreek-daily-checklist',           title: 'Sugar Creek Daily Operations Checklist',   viewer: true },
+            { id: 'sugarcreek-incident-escalation',       title: 'Sugar Creek Incident Escalation',          viewer: true },
         ]
     },
     {
@@ -482,7 +485,9 @@ graph TD
             ]
         },
         bpmChart: null,
-        sops: []
+        sops: [
+            { id: 'one-three-one-rule',                   title: '131 Rule — Escalation to Blake',           viewer: true },
+        ]
     },
 ];
 
