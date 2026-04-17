@@ -64,6 +64,7 @@ graph TD
             { id: 'searching-for-backhaul',           title: 'Searching for and Securing a Backhaul Load', file: 'sops/searching-for-and-securing-a-backhaul-load.md' },
             { id: 'samsara-violation-review',         title: 'Samsara Violation Daily Review',             file: 'sops/samsara-violation-daily-review.md' },
             { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
+            { id: 'delay-notification',               title: 'Proactive Customer Delay Notification',      viewer: true },
         ]
     },
     {
@@ -118,7 +119,9 @@ graph TD
             { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
             { id: 'ar-collections-process',           title: 'AR Collections Process',                     file: 'sops/ar-collections-process.md' },
             { id: 'qb-invoice-creation',              title: 'QB Invoice Creation',                        file: 'sops/qb-invoice-creation.md' },
-            { id: 'maintenance-spend-approval',       title: 'Equipment Repair Spend Approval',            file: 'sops/equipment-repair-approval-workflow.md' },
+            { id: 'driver-hiring',                    title: 'Driver Hiring Process',                      viewer: true },
+            { id: 'driver-onboarding',                title: 'Driver Onboarding & DQF File Creation',     viewer: true },
+            { id: 'fleet-compliance',                 title: 'Fleet Compliance & Renewal Calendar',        viewer: true },
         ]
     },
     {
@@ -241,7 +244,58 @@ graph LR
         },
         bpmChart: null,
         sops: [
-            { id: 'cross-dock-operations', title: 'Cross-Dock Operations', file: 'sops/cross-dock-operations.md' },
+            { id: 'cross-dock-operations',            title: 'Cross-Dock Operations',                     file: 'sops/cross-dock-operations.md' },
+            { id: 'cross-dock-documentation',         title: 'Cross-Dock Documentation Flow',             viewer: true },
+        ]
+    },
+    {
+        id: 'sales',
+        name: 'Sales',
+        person: 'Tim Utzinger',
+        personTitle: 'Sales Director',
+        reportsTo: 'Blake Lappan',
+        icon: '📈',
+        desc: 'Customer acquisition, rate strategy, discovery process, and sales-to-ops handoff.',
+        accentColor: '#f97316',
+        tileBg: 'linear-gradient(135deg, #2a0f00 0%, #170800 100%)',
+        jobDescription: {
+            owns: [
+                'Lead generation and customer acquisition',
+                'Written discovery summary required before any rate is quoted',
+                'Rate negotiation — never take first offer, know the floor',
+                'Sales-to-ops handoff email within 24 hours of closing a deal',
+                'Customer follow-up within 5 days of first load',
+                'Responding to all inquiries within 30 minutes minimum',
+                'Customer relationship management on all active accounts'
+            ],
+            supports: [
+                'Austin — lane feasibility and driver availability before quoting',
+                'Lindsay — billing setup and rate confirmation for new customers',
+                'Blake — pricing exceptions and major account strategy'
+            ],
+            notOwns: [
+                'Load dispatch and driver coordination → Austin',
+                'Invoicing and collections → Lindsay',
+                'Rate exceptions above agreed floor → Blake approval required'
+            ]
+        },
+        bpmChart: `
+graph TD
+    A["Lead Identified"] --> B["Tim: Discovery Call\n(summary required)"]
+    B --> C["Tim: Build Rate Quote"]
+    C --> D["Tim: Present & Negotiate"]
+    D --> E{Deal Closed?}
+    E -->|No| F["Tim: Follow-Up Sequence"]
+    F --> D
+    E -->|Yes| G["Tim: Handoff Email\n(Austin + Lindsay)"]
+    G --> H["Austin: First Load Setup"]
+    G --> I["Lindsay: Billing Setup in QB"]
+    H --> J["Tim: Follow-Up within 5 days"]
+    style A fill:#2a0f00,color:#fff,stroke:#f97316
+    style J fill:#0a2a1a,color:#fff,stroke:#10b981
+`,
+        sops: [
+            { id: 'customer-onboarding',              title: 'Customer Onboarding — Sales to Ops Handoff', viewer: true },
         ]
     },
     {
@@ -303,6 +357,8 @@ graph TD
             { id: 'fleet-maintenance-request',        title: 'Fleet Maintenance Request Process',          file: 'sops/fleet-maintenance-request-process.md' },
             { id: 'equipment-repair-approval',        title: 'Equipment Repair Approval Workflow',         file: 'sops/equipment-repair-approval-workflow.md' },
             { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
+            { id: 'maintenance-request',              title: 'Equipment Maintenance Request Process',      viewer: true },
+            { id: 'cross-dock-documentation',         title: 'Cross-Dock Documentation Flow',             viewer: true },
         ]
     },
     {
@@ -354,6 +410,8 @@ graph TD
             { id: 'adding-new-driver-to-ditat',       title: 'Adding a New Driver to Ditat',               file: 'sops/adding-new-driver-to-ditat.md' },
             { id: 'adding-new-driver-to-samsara',     title: 'Adding a New Driver to Samsara',             file: 'sops/adding-new-driver-to-samsara.md' },
             { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
+            { id: 'driver-hiring',                    title: 'Driver Hiring Process',                      viewer: true },
+            { id: 'driver-onboarding',                title: 'Driver Onboarding & DQF File Creation',     viewer: true },
         ]
     },
     {
@@ -390,6 +448,7 @@ graph TD
             { id: 'before-dispatch-compliance-check-drivers', title: 'Before Dispatch Compliance Check', file: 'sops/before-dispatch-compliance-check-drivers.md' },
             { id: 'tag-renewal-registration',         title: 'Tag Renewal & Registration Tracking',        file: 'sops/tag-renewal-registration-tracking.md' },
             { id: 'samsara-violation-review',         title: 'Samsara Violation Daily Review',             file: 'sops/samsara-violation-daily-review.md' },
+            { id: 'fleet-compliance',                 title: 'Fleet Compliance & Renewal Calendar',        viewer: true },
         ]
     },
     {
@@ -542,8 +601,15 @@ function openPosition(posId) {
 // ── OPEN SOP ──────────────────────────────────────────────────
 async function openSOP(sopId) {
     const sop = currentPosition ? currentPosition.sops.find(s => s.id === sopId) : null;
-    if (!sop || !sop.file) return;
+    if (!sop) return;
 
+    // New viewer-based SOPs open in sop-viewer.html
+    if (sop.viewer) {
+        window.location.href = `sop-viewer.html?id=${sopId}`;
+        return;
+    }
+
+    if (!sop.file) return;
     showView('viewSOPContent');
     document.getElementById('pageTitle').textContent = sop.title;
     document.getElementById('sopContentTitle').textContent = sop.title;
