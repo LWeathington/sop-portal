@@ -136,56 +136,6 @@ graph TD
         ]
     },
     {
-        id: 'sales',
-        name: 'Sales',
-        person: 'Tim Utzinger',
-        personTitle: 'Sales Director',
-        reportsTo: 'Blake Lappan',
-        icon: '📈',
-        desc: 'Full sales lifecycle from lead to contract, rate strategy, and customer onboarding.',
-        accentColor: '#f97316',
-        tileBg: 'linear-gradient(135deg, #2a1200 0%, #180900 100%)',
-        jobDescription: {
-            owns: [
-                'Full sales lifecycle: Awareness → Lead → Qualify → Discovery → Solution → Pricing → Contract → Onboard',
-                'KPI tracking: touches per rep per week, conversion rates, margin quoted vs. realized',
-                'Rate strategy — discovery summary REQUIRED before any pricing is given',
-                'Broker and carrier relationship management',
-                '1% Forever Commission program — tracking and communication',
-                'Bid spotting and niche lane identification',
-                'Customer discovery meetings and follow-up documentation'
-            ],
-            supports: [
-                'Blake — bid spotting and long-term partnership pricing decisions',
-                'Austin — smooth handoff when new customer goes live'
-            ],
-            notOwns: [
-                'Operations execution once customer is onboarded → Austin',
-                'Invoicing and billing → Lindsay',
-                'Rate exceptions above authority → Blake'
-            ]
-        },
-        bpmChart: `
-graph LR
-    A["🎯 Lead Identified (Tim)"] --> B["Qualify (Tim)"]
-    B --> C["Discovery Meeting (Tim)<br/>Summary doc REQUIRED"]
-    C --> D["Solution Proposal (Tim)"]
-    D --> E{Niche Pricing?}
-    E -->|Yes| F["Tim + Blake: Approve Rate"]
-    E -->|No| G["Tim: Standard Pricing"]
-    F --> H["Contract Signed"]
-    G --> H
-    H --> I["Handoff to Austin (Ops)"]
-    I --> J["Lindsay: Set Up Billing in QB"]
-    style A fill:#2a1200,color:#fff,stroke:#f97316
-    style J fill:#0a2a1a,color:#fff,stroke:#10b981
-`,
-        sops: [
-            { id: 'sales-discovery-process',          title: 'Sales Discovery Process',                    file: 'sops/sales-discovery-process.md' },
-            { id: 'new-customer-onboarding',          title: 'New Customer Onboarding (Sales → Ops)',       file: 'sops/new-customer-onboarding.md' },
-        ]
-    },
-    {
         id: 'yard-kc',
         name: 'Yard & Spotting (KC)',
         person: 'Phil Stuart',
@@ -308,6 +258,8 @@ graph TD
     style J fill:#0a2a1a,color:#fff,stroke:#10b981
 `,
         sops: [
+            { id: 'sales-discovery-process',          title: 'Sales Discovery Process',                    file: 'sops/sales-discovery-process.md' },
+            { id: 'new-customer-onboarding',          title: 'New Customer Onboarding (Sales → Ops)',       file: 'sops/new-customer-onboarding.md' },
             { id: 'customer-onboarding',              title: 'Customer Onboarding — Sales to Ops Handoff', viewer: true },
         ]
     },
