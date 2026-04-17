@@ -289,18 +289,85 @@
 
     </div>
 
+    <!-- ===================== EMPLOYEE PORTAL ===================== -->
+    <div id="empRoot" class="app-container hidden">
+
+        <header class="top-nav">
+            <div class="top-nav-left">
+                <span class="logo-text nav-logo">Spot On <span class="logo-accent">TMS</span></span>
+            </div>
+            <div class="top-nav-center">
+                <h2 class="page-title">Employee Portal</h2>
+            </div>
+            <div class="top-nav-right"></div>
+        </header>
+
+        <!-- Home: Role Selection -->
+        <div id="empViewHome" class="view">
+            <div class="emp-welcome">
+                <div class="emp-welcome-emoji">&#128075;</div>
+                <h1 class="emp-welcome-title">Welcome to Spot On!</h1>
+                <p class="emp-welcome-sub">Select your role to access your handbook, forms, and company resources.</p>
+            </div>
+            <div class="emp-tiles-grid" id="empTilesGrid"></div>
+            <div class="emp-contact-section">
+                <div class="emp-contact-title">&#128222; Company Contacts</div>
+                <div class="emp-contact-grid">
+                    <div class="emp-contact-card">
+                        <div class="emp-contact-role">&#128665; Dispatch</div>
+                        <div class="emp-contact-name">Austin Boerckel</div>
+                        <a class="emp-contact-detail" href="mailto:dispatch@spotontms.com">dispatch@spotontms.com</a>
+                    </div>
+                    <div class="emp-contact-card">
+                        <div class="emp-contact-role">&#128188; Accounting &amp; HR</div>
+                        <div class="emp-contact-name">Lindsay Weathington</div>
+                        <a class="emp-contact-detail" href="mailto:dispatch@spotontms.com">dispatch@spotontms.com</a>
+                    </div>
+                    <div class="emp-contact-card">
+                        <div class="emp-contact-role">&#127970; Sugar Creek</div>
+                        <div class="emp-contact-name">Mike Jackson</div>
+                        <a class="emp-contact-detail" href="mailto:dispatch@spotontms.com">dispatch@spotontms.com</a>
+                    </div>
+                    <div class="emp-contact-card">
+                        <div class="emp-contact-role">&#127963; KC Yard</div>
+                        <div class="emp-contact-name">Phil Stuart</div>
+                        <a class="emp-contact-detail" href="mailto:dispatch@spotontms.com">dispatch@spotontms.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Docs View -->
+        <div id="empViewRole" class="view hidden">
+            <div style="margin-bottom:28px">
+                <button class="back-btn" onclick="goEmpBack()" style="margin-bottom:16px">&#8592; Back to Roles</button>
+                <h2 id="empRoleTitle" class="emp-role-title"></h2>
+            </div>
+            <div id="empRoleDocs" class="doc-grid"></div>
+        </div>
+
+    </div>
+
     <script>
-        const PORTAL_PASSWORD = 'spoton2025';
+        const MGMT_PWD = 'spoton2025';
+        const EMP_PWD  = 'spoton';
+
         function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
+            const input = document.getElementById('passwordInput').value.trim();
             const errorEl = document.getElementById('passwordError');
-            if (input === PORTAL_PASSWORD) {
+
+            if (input === MGMT_PWD || input === EMP_PWD) {
                 const gate = document.getElementById('passwordGate');
                 gate.style.opacity = '0';
                 gate.style.pointerEvents = 'none';
                 setTimeout(() => {
                     gate.style.display = 'none';
-                    document.getElementById('appRoot').classList.remove('hidden');
+                    if (input === MGMT_PWD) {
+                        document.getElementById('appRoot').classList.remove('hidden');
+                    } else {
+                        document.getElementById('empRoot').classList.remove('hidden');
+                        if (typeof renderEmpTiles === 'function') renderEmpTiles();
+                    }
                 }, 350);
             } else {
                 errorEl.classList.remove('hidden');
@@ -309,6 +376,7 @@
                 setTimeout(() => document.getElementById('passwordInput').classList.remove('shake'), 500);
             }
         }
+
         document.addEventListener('DOMContentLoaded', () => {
             const pwInput = document.getElementById('passwordInput');
             pwInput.addEventListener('keydown', (e) => {
@@ -316,13 +384,13 @@
                 document.getElementById('passwordError').classList.add('hidden');
             });
             pwInput.focus();
-            // Register service worker for PWA
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sop-portal/sw.js')
-                    .catch(err => console.log('SW registration failed:', err));
+                    .catch(err => console.log('SW:', err));
             }
         });
     </script>
     <script src="app.js"></script>
+    <script src="emp.js"></script>
 </body>
 </html>
