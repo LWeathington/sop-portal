@@ -230,6 +230,18 @@
         .tag-off    { background: rgba(239,68,68,0.15);  color: var(--red); }
         .tag-formal { background: rgba(59,130,246,0.15); color: var(--blue); }
 
+        /* GLANCE GROUP LABELS */
+        .glance-group-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: 1px solid;
+            margin-bottom: 10px;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
         /* KEY REMINDERS */
         .reminders {
             display: grid;
@@ -305,115 +317,172 @@
 
     <!-- QUICK SUMMARY TABLE -->
     <div class="changes-group">
-        <div class="section-title">At a Glance — What Moved Where</div>
-        <table class="summary-table">
+        <div class="section-title">At a Glance — What Changed &amp; Why</div>
+
+        <!-- GROUP: OWNERSHIP MOVED -->
+        <div class="glance-group-label" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.3);color:var(--green);">
+            &#8635; Ownership Moved — These responsibilities now have a new owner
+        </div>
+        <table class="summary-table" style="margin-bottom:24px;">
             <thead>
                 <tr>
-                    <th>Change</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Type</th>
+                    <th>Responsibility</th>
+                    <th>Was</th>
+                    <th>Now</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Fleet maintenance &amp; repairs — all equipment</td>
                     <td>Austin (by default)</td>
-                    <td>Mike Jackson</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Mike Jackson</strong></td>
                 </tr>
                 <tr>
                     <td>Cross-dock operations</td>
                     <td>Austin (by default)</td>
-                    <td>Mike Jackson</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Mike Jackson</strong></td>
                 </tr>
                 <tr>
                     <td>Sugar Creek site management</td>
                     <td>Mike Jackson</td>
-                    <td>Steve Weindorfer</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Steve Weindorfer</strong></td>
                 </tr>
                 <tr>
-                    <td>Mike's schedule — fleet first, automation second</td>
-                    <td>Not defined</td>
-                    <td>Mon–Thu on-site (fleet → automation); Friday WFH + Sugar Creek check-in</td>
-                    <td><span class="tag tag-formal">Formalized</span></td>
-                </tr>
-                <tr>
-                    <td>Tag renewals, vehicle registration, fleet compliance docs</td>
+                    <td>Tag renewals, vehicle registration &amp; fleet compliance docs</td>
                     <td>Nobody (fell through cracks)</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
-                </tr>
-                <tr>
-                    <td>Sales discovery &mdash; summary required before pricing</td>
-                    <td>Informal / ad hoc</td>
-                    <td>Tim Utzinger (formal rule)</td>
-                    <td><span class="tag tag-formal">Formalized</span></td>
-                </tr>
-                <tr>
-                    <td>Sales → Ops handoff when customer goes live</td>
-                    <td>Not documented</td>
-                    <td>Tim → Austin + Lindsay</td>
-                    <td><span class="tag tag-new">New Process</span></td>
-                </tr>
-                <tr>
-                    <td>Driver compliance file &amp; policy forms</td>
-                    <td>Not clearly owned</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-formal">Formalized</span></td>
-                </tr>
-                <tr>
-                    <td>Samsara daily violation review</td>
-                    <td>Not documented</td>
-                    <td>Austin Boerckel (daily)</td>
-                    <td><span class="tag tag-formal">Formalized</span></td>
-                </tr>
-                <tr>
-                    <td>Driver hiring minimum standard (2+ years CDL)</td>
-                    <td>Informal</td>
-                    <td>Austin — formal requirement</td>
-                    <td><span class="tag tag-formal">Formalized</span></td>
+                    <td><strong>Lindsay Weathington</strong></td>
                 </tr>
                 <tr>
                     <td>Daily invoicing &amp; all billing</td>
                     <td>Austin (by default)</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Lindsay Weathington</strong></td>
                 </tr>
                 <tr>
                     <td>HR &amp; hiring coordination, onboarding paperwork, benefits</td>
                     <td>Austin (by default)</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Lindsay Weathington</strong></td>
                 </tr>
                 <tr>
                     <td>DQF compliance — driver qualification files &amp; policy forms</td>
                     <td>Not clearly owned</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
+                    <td><strong>Lindsay Weathington</strong></td>
                 </tr>
                 <tr>
                     <td>IFTA, DOT, UCR, MoDOT renewals, insurance &amp; tax filings</td>
                     <td>Austin (by default)</td>
-                    <td>Lindsay Weathington</td>
-                    <td><span class="tag tag-new">New Owner</span></td>
-                </tr>
-                <tr>
-                    <td>Steve Weindorfer — Sugar Creek Lead &rarr; Manager</td>
-                    <td>Lead (Level 1, hands-on)</td>
-                    <td>Manager (Level 2, scheduling, safety, daily reporting)</td>
-                    <td><span class="tag tag-formal">Promoted</span></td>
+                    <td><strong>Lindsay Weathington</strong></td>
                 </tr>
                 <tr>
                     <td>Maintenance coordination &amp; ownership</td>
                     <td>Tim Utzinger</td>
-                    <td>Mike Jackson (Tim/Austin support on physical tasks)</td>
-                    <td><span class="tag tag-off">Off Plate</span></td>
+                    <td><strong>Mike Jackson</strong> (Tim &amp; Austin support on physical tasks)</td>
                 </tr>
             </tbody>
         </table>
+
+        <!-- GROUP: FORMALIZED -->
+        <div class="glance-group-label" style="background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3);color:var(--blue);">
+            &#128203; Formalized — These already existed but are now documented and enforced
+        </div>
+        <table class="summary-table" style="margin-bottom:24px;">
+            <thead>
+                <tr>
+                    <th>Process</th>
+                    <th>Old State</th>
+                    <th>Formal Rule</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mike's weekly schedule — fleet first, automation second</td>
+                    <td>Not defined</td>
+                    <td>Mon–Thu on-site (fleet &rarr; automation); Friday WFH + Sugar Creek check-in</td>
+                </tr>
+                <tr>
+                    <td>Driver hiring minimum standard</td>
+                    <td>Informal / gut feel</td>
+                    <td>2+ years CDL required — Austin enforces at screening</td>
+                </tr>
+                <tr>
+                    <td>Samsara daily violation review</td>
+                    <td>Not documented</td>
+                    <td>Austin — every morning before dispatch (DVIRs, HOS, safety events)</td>
+                </tr>
+                <tr>
+                    <td>Driver compliance file &amp; policy acknowledgement forms</td>
+                    <td>Not clearly owned</td>
+                    <td>Lindsay creates file; forms signed before first dispatch</td>
+                </tr>
+                <tr>
+                    <td>Repair spend approval thresholds</td>
+                    <td>Not defined</td>
+                    <td>Under $500 → Mike auto-approves; $500–$2,500 → Lindsay; Over $2,500 → Blake</td>
+                </tr>
+                <tr>
+                    <td>Sales discovery summary before pricing</td>
+                    <td>Informal / ad hoc</td>
+                    <td>Tim — required before any rate is quoted, no exceptions</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- GROUP: NEW PROCESSES -->
+        <div class="glance-group-label" style="background:rgba(168,85,247,0.08);border-color:rgba(168,85,247,0.3);color:var(--purple);">
+            &#10024; New Processes Created — These workflows did not exist before
+        </div>
+        <table class="summary-table" style="margin-bottom:24px;">
+            <thead>
+                <tr>
+                    <th>New Process</th>
+                    <th>Who Owns It</th>
+                    <th>What Triggers It</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sales &rarr; Ops handoff when a customer goes live</td>
+                    <td>Tim Utzinger</td>
+                    <td>Contract signed — Tim sends handoff email to Austin + Lindsay with full details, rates, and start date</td>
+                </tr>
+                <tr>
+                    <td>Steve's daily operational summary to Austin</td>
+                    <td>Steve Weindorfer</td>
+                    <td>Every evening — yard status, equipment, delays, anything that needs attention</td>
+                </tr>
+                <tr>
+                    <td>131 Rule — how to bring decisions to Blake</td>
+                    <td>Whole team</td>
+                    <td>Any time you need Blake's approval: 1 Problem, 3 Solutions, 1 Recommendation</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- GROUP: PROMOTIONS -->
+        <div class="glance-group-label" style="background:rgba(20,184,166,0.08);border-color:rgba(20,184,166,0.3);color:var(--teal);">
+            &#11088; Promotions &amp; Role Changes
+        </div>
+        <table class="summary-table" style="margin-bottom:24px;">
+            <thead>
+                <tr>
+                    <th>Person</th>
+                    <th>Previous Role</th>
+                    <th>New Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Steve Weindorfer</td>
+                    <td>Sugar Creek Lead (Level 1, hands-on)</td>
+                    <td><strong>Sugar Creek Manager</strong> — Level 2 escalation, scheduling, safety leadership, daily reporting</td>
+                </tr>
+                <tr>
+                    <td>Mike Jackson</td>
+                    <td>Sugar Creek / Cross-Dock Manager (catch-all)</td>
+                    <td><strong>Fleet Maintenance Manager</strong> — dedicated focus on all equipment + automation projects</td>
+                </tr>
+            </tbody>
+        </table>
+
     </div>
 
     <!-- PER-PERSON BREAKDOWN -->
