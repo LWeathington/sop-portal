@@ -498,10 +498,13 @@ function openPosition(posId) {
                  ${available ? `onclick="openSOP('${sop.id}')"` : ''}
                  style="--tile-accent:${available ? pos.accentColor : 'var(--border)'}">
                 <div class="sop-tile-icon">${icon}</div>
-                <div class="sop-tile-title">${sop.title}</div>
-                <div class="sop-tile-status" style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
-                    ${available ? 'Available ↗' : 'Coming Soon'}
+                <div class="sop-tile-body">
+                    <div class="sop-tile-title">${sop.title}</div>
+                    <div class="sop-tile-status" style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
+                        ${available ? 'Available' : 'Coming Soon'}
+                    </div>
                 </div>
+                ${available ? '<span class="sop-tile-arrow">&#8594;</span>' : ''}
             </div>`;
         }).join('');
 
