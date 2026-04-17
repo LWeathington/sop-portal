@@ -542,80 +542,100 @@ html, body {
     min-height: 120px;
 }
 
-/* ---------- SOP List Inner (in position view) ---------- */
-.sop-list-inner {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
-}
-
-/* Make sop-card work in list view too */
-.sop-card {
-    border-radius: var(--radius-sm);
-}
-
-@media (max-width: 768px) {
-    .job-desc-section { grid-template-columns: 1fr; }
-    .sop-list-inner { grid-template-columns: 1fr; }
-}
-
-/* ---------- SOP List View ---------- */
-.sop-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.sop-card {
+/* ---------- Person bar (compact, replaces old role-header in SOP view) ---------- */
+.pos-person-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 22px 24px;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    margin-bottom: 28px;
+}
+.pos-person-icon { font-size: 1.6rem; line-height: 1; }
+.pos-person-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.pos-person-title { font-size: 0.78rem; font-weight: 600; margin-top: 2px; }
+
+/* ---------- SOP Tiles Grid ---------- */
+.sop-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.sop-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 18px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
 }
 
-.sop-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+.sop-tile::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--tile-accent, var(--border));
+    border-radius: 16px 16px 0 0;
 }
 
-.sop-card-title {
-    font-size: 0.95rem;
+.sop-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+    border-color: rgba(255,255,255,0.12);
+}
+
+.sop-tile-icon {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+    line-height: 1;
+}
+
+.sop-tile-title {
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-primary);
     line-height: 1.4;
+    flex: 1;
+    margin-bottom: 14px;
 }
 
-.sop-card-meta {
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.sop-tile-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
-.sop-card-arrow {
-    margin-left: auto;
-    color: var(--text-muted);
-    font-size: 1rem;
-    transition: transform var(--transition);
-}
-
-.sop-card:hover .sop-card-arrow {
-    transform: translateX(4px);
-}
-
-.sop-coming-soon {
-    opacity: 0.45;
+.sop-tile-soon {
+    opacity: 0.4;
     cursor: default;
 }
-.sop-coming-soon:hover { transform: none; box-shadow: none; }
+.sop-tile-soon:hover { transform: none; box-shadow: none; }
+
+/* Legacy class — kept for search compat */
+.sop-list-inner { display: contents; }
+.sop-card { display: none; }
+
+.sop-coming-soon { opacity: 0.4; cursor: default; }
+
+@media (max-width: 900px) {
+    .sop-tiles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+    .sop-tiles-grid { grid-template-columns: 1fr; }
+}
+
 
 /* ---------- SOP Content View ---------- */
 .sop-content-wrapper {
