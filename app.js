@@ -523,6 +523,48 @@ function renderHomeTiles() {
     }).join('');
 }
 
+// ── SOP ICON LOOKUP ───────────────────────────────────────────
+const SOP_ICONS = {
+    'morning-dispatch-operations'          : '🌅',
+    'afternoon-dispatch-operations'        : '🌆',
+    'dispatch-daily-routine'               : '📋',
+    'daily-checklist'                      : '✅',
+    'daily-dispatch-objectives'            : '🎯',
+    'updating-trip-statuses'               : '🔄',
+    'upon-arrival-first-logins'            : '🖥️',
+    'upon-arrival-tire-checks'             : '🔍',
+    'before-dispatch-compliance-check'     : '✔️',
+    'before-dispatch-compliance-check-drivers': '✔️',
+    'building-a-load-in-ditat-tms'         : '🏗️',
+    'searching-for-backhaul'               : '🔎',
+    'samsara-violation-review'             : '⚠️',
+    'driver-orientation'                   : '🪪',
+    'daily-time-updates'                   : '🕐',
+    'delay-notification'                   : '📢',
+    'sop-bill-empire-mondays'              : '📅',
+    'how-to-attach-and-invoice-ditat'      : '📎',
+    'tag-renewal-registration'             : '🏷️',
+    'ar-collections-process'              : '💰',
+    'qb-invoice-creation'                  : '🧾',
+    'driver-hiring'                        : '📝',
+    'driver-onboarding'                    : '🆕',
+    'fleet-compliance'                     : '⚖️',
+    'cross-dock-operations'                : '📦',
+    'cross-dock-documentation'             : '📄',
+    'sugarcreek-daily-checklist'           : '✅',
+    'sugarcreek-incident-escalation'       : '🚨',
+    'customer-onboarding'                  : '🤝',
+    'fleet-maintenance-request'            : '🔧',
+    'equipment-repair-approval'            : '💵',
+    'maintenance-request'                  : '🔨',
+    'onboarding'                           : '👋',
+    'adding-new-driver-to-ditat'           : '➕',
+    'adding-new-driver-to-samsara'         : '📡',
+    'one-three-one-rule'                   : '💡',
+    'maintenance-spend-approval'           : '💳',
+    'cross-dock-operations'                : '📦',
+};
+
 // ── OPEN POSITION ─────────────────────────────────────────────
 function openPosition(posId) {
     currentPosition = POSITIONS.find(p => p.id === posId);
@@ -535,40 +577,36 @@ function openPosition(posId) {
     const pos = currentPosition;
     const grid = document.getElementById('sopListGrid');
 
-    const sopCardsHTML = pos.sops.length === 0
-        ? `<p style="color:var(--text-secondary);padding:16px 0;">SOPs coming soon.</p>`
+    const tilesHTML = pos.sops.length === 0
+        ? `<p style="color:var(--text-secondary);padding:24px 0;grid-column:1/-1;">SOPs coming soon.</p>`
         : pos.sops.map(sop => {
             const available = !!(sop.file || sop.viewer);
+            const icon = SOP_ICONS[sop.id] || '📄';
             return `
-            <div class="sop-card ${available ? '' : 'sop-coming-soon'}"
+            <div class="sop-tile ${available ? '' : 'sop-tile-soon'}"
                  ${available ? `onclick="openSOP('${sop.id}')"` : ''}
-                 style="border-left: 3px solid ${available ? pos.accentColor : 'var(--border)'}">
-                <div class="sop-card-title">${sop.title}</div>
-                <div class="sop-card-meta">
-                    <span style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
-                        ${available ? 'Available' : 'Coming Soon'}
-                    </span>
-                    ${available ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
+                 style="--tile-accent:${available ? pos.accentColor : 'var(--border)'}">
+                <div class="sop-tile-icon">${icon}</div>
+                <div class="sop-tile-title">${sop.title}</div>
+                <div class="sop-tile-status" style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
+                    ${available ? 'Available ↗' : 'Coming Soon'}
                 </div>
             </div>`;
         }).join('');
 
     grid.innerHTML = `
-        <div class="role-header" style="border-left:4px solid ${pos.accentColor};margin-bottom:24px">
-            <div class="role-meta">
-                <span class="role-icon">${pos.icon}</span>
-                <div>
-                    <div class="role-person">${pos.person}</div>
-                    <div class="role-title" style="color:${pos.accentColor}">${pos.personTitle}</div>
-                    <div class="role-reports">Reports to: ${pos.reportsTo}</div>
-                </div>
+        <div class="pos-person-bar" style="border-left:3px solid ${pos.accentColor}">
+            <span class="pos-person-icon">${pos.icon}</span>
+            <div>
+                <div class="pos-person-name">${pos.person}</div>
+                <div class="pos-person-title" style="color:${pos.accentColor}">${pos.personTitle}</div>
             </div>
         </div>
-        <div class="sop-list-inner">${sopCardsHTML}</div>
+        <div class="sop-tiles-grid">${tilesHTML}</div>
     `;
 }
 
-function switchTab() {} // stub — tabs removed, kept for safety
+function switchTab() {} // stub — kept for safety
 
 // ── OPEN SOP ──────────────────────────────────────────────────
 async function openSOP(sopId) {
