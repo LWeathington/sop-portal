@@ -535,8 +535,27 @@ function openPosition(posId) {
     const pos = currentPosition;
     const grid = document.getElementById('sopListGrid');
 
-    // Build job description card
-    const jobDescHTML = `
+    // ── SOP LIST PANEL ──────────────────────────────────────
+    const sopCardsHTML = pos.sops.length === 0
+        ? `<p style="color:var(--text-secondary);padding:16px 0;">SOPs coming soon.</p>`
+        : pos.sops.map(sop => {
+            const available = !!(sop.file || sop.viewer);
+            return `
+            <div class="sop-card ${available ? '' : 'sop-coming-soon'}"
+                 ${available ? `onclick="openSOP('${sop.id}')"` : ''}
+                 style="border-left: 3px solid ${available ? pos.accentColor : 'var(--border)'};">
+                <div class="sop-card-title">${sop.title}</div>
+                <div class="sop-card-meta">
+                    <span style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
+                        ${available ? 'Available' : 'Coming Soon'}
+                    </span>
+                    ${available ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
+                </div>
+            </div>`;
+        }).join('');
+
+    // ── ROLE OVERVIEW PANEL ─────────────────────────────────
+    const roleHTML = `
     <div class="role-header" style="border-left: 4px solid ${pos.accentColor}">
         <div class="role-meta">
             <span class="role-icon">${pos.icon}</span>
@@ -572,33 +591,44 @@ function openPosition(posId) {
     <div class="bpm-section">
         <div class="section-label" style="color:${pos.accentColor}">📊 Process Flow</div>
         <div class="mermaid bpm-chart">${pos.bpmChart}</div>
-    </div>` : ''}
+    </div>` : ''}`;
 
-    <div class="section-label" style="color:${pos.accentColor}; margin: 24px 0 14px">📋 Standard Operating Procedures</div>
+    // ── ASSEMBLE WITH TABS ──────────────────────────────────
+    grid.innerHTML = `
+        <div class="pos-tabs">
+            <button class="pos-tab active" id="tab-sops" onclick="switchTab('sops')">
+                📋 SOPs (${pos.sops.length})
+            </button>
+            <button class="pos-tab" id="tab-role" onclick="switchTab('role')">
+                👤 Role Overview
+            </button>
+        </div>
 
-    <div class="sop-list-inner">
-        ${pos.sops.length === 0 ? `<p style="color:var(--text-secondary)">SOPs coming soon.</p>` :
-        pos.sops.map(sop => {
-            const available = !!sop.file;
-            return `
-            <div class="sop-card ${available ? '' : 'sop-coming-soon'}"
-                 ${available ? `onclick="openSOP('${sop.id}')"` : ''}
-                 style="border-left: 3px solid ${available ? pos.accentColor : 'var(--border)'};">
-                <div class="sop-card-title">${sop.title}</div>
-                <div class="sop-card-meta">
-                    <span style="color:${available ? pos.accentColor : 'var(--text-muted)'}">
-                        ${available ? 'Available' : 'Coming Soon'}
-                    </span>
-                    ${available ? '<span class="sop-card-arrow">&#8594;</span>' : ''}
-                </div>
-            </div>`;
-        }).join('')}
-    </div>`;
+        <div class="pos-tab-panel active" id="panel-sops">
+            <div class="sop-list-inner">${sopCardsHTML}</div>
+        </div>
 
-    grid.innerHTML = jobDescHTML;
+        <div class="pos-tab-panel" id="panel-role">
+            ${roleHTML}
+        </div>
+    `;
 
-    // Render mermaid charts
+    // Render mermaid on role tab only when opened
     if (typeof mermaid !== 'undefined' && pos.bpmChart) {
+        // Deferred — render when tab is switched to
+        window._pendingMermaid = true;
+    }
+}
+
+function switchTab(tab) {
+    document.querySelectorAll('.pos-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.pos-tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+
+    // Render mermaid chart if switching to role tab
+    if (tab === 'role' && window._pendingMermaid && typeof mermaid !== 'undefined') {
+        window._pendingMermaid = false;
         mermaid.run({ querySelector: '.mermaid' });
     }
 }
