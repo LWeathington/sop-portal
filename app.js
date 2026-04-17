@@ -51,21 +51,23 @@ graph TD
     style H fill:#0a2a1a,color:#fff,stroke:#10b981
 `,
         sops: [
+            // ── Daily Routines ──────────────────────────────
             { id: 'morning-dispatch-operations',      title: 'Morning Dispatch Operations',                file: 'sops/morning-dispatch-operations.md' },
-            { id: 'afternoon-dispatch-operations',    title: 'Afternoon Dispatch Operations',              file: 'sops/afternoon-dispatch-operations.md' },
             { id: 'dispatch-daily-routine',           title: 'Dispatch Daily Routine',                     file: 'sops/dispatch-daily-routine.md' },
             { id: 'daily-checklist',                  title: 'Daily Checklist',                            file: 'sops/daily-checklist.md' },
             { id: 'daily-dispatch-objectives',        title: 'Daily Dispatch Objectives',                  file: 'sops/daily-dispatch-objectives.md' },
-            { id: 'updating-trip-statuses',           title: 'Updating Trip Statuses in Ditat',            file: 'sops/updating-trip-statuses.md' },
+            { id: 'daily-time-updates',               title: 'Daily Time Updates',                         viewer: true },
+            { id: 'afternoon-dispatch-operations',    title: 'Afternoon Dispatch Operations',              file: 'sops/afternoon-dispatch-operations.md' },
+            // ── How-To / Reference ──────────────────────────
             { id: 'upon-arrival-first-logins',        title: 'Upon Arrival: First Log-Ins',                file: 'sops/upon-arrival-first-logins.md' },
             { id: 'upon-arrival-tire-checks',         title: 'Upon Arrival: Tire Checks',                  file: 'sops/upon-arrival-tire-checks.md' },
             { id: 'before-dispatch-compliance-check', title: 'Before Dispatch Compliance Check',           file: 'sops/before-dispatch-compliance-check-drivers.md' },
+            { id: 'updating-trip-statuses',           title: 'Updating Trip Statuses in Ditat',            file: 'sops/updating-trip-statuses.md' },
             { id: 'building-a-load-in-ditat-tms',     title: 'Building a Load in Ditat TMS',               file: 'sops/building-a-load-in-ditat-tms.md' },
             { id: 'searching-for-backhaul',           title: 'Searching for and Securing a Backhaul Load', file: 'sops/searching-for-and-securing-a-backhaul-load.md' },
+            { id: 'delay-notification',               title: 'Proactive Customer Delay Notification',      viewer: true },
             { id: 'samsara-violation-review',         title: 'Samsara Violation Daily Review',             file: 'sops/samsara-violation-daily-review.md' },
             { id: 'driver-orientation',               title: 'Driver Orientation — Step by Step',          file: 'sops/driver-orientation-step-by-step.md' },
-            { id: 'daily-time-updates',               title: 'Daily Time Updates',                         viewer: true },
-            { id: 'delay-notification',               title: 'Proactive Customer Delay Notification',      viewer: true },
         ]
     },
     {
