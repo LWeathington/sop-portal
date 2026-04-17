@@ -81,8 +81,17 @@
             <div id="viewSOPContent" class="view hidden">
                 <div class="sop-content-wrapper">
                     <div class="sop-content-header">
-                        <h1 id="sopContentTitle" class="sop-content-title"></h1>
-                        <div id="sopContentMeta" class="sop-content-meta"></div>
+                        <div style="flex:1">
+                            <h1 id="sopContentTitle" class="sop-content-title"></h1>
+                            <div id="sopContentMeta" class="sop-content-meta"></div>
+                        </div>
+                        <button onclick="window.print()" style="
+                            display:inline-flex;align-items:center;gap:6px;
+                            background:#10b981;color:#fff;border:none;
+                            padding:8px 18px;border-radius:8px;font-size:0.82rem;
+                            font-weight:600;cursor:pointer;white-space:nowrap;
+                            font-family:inherit;flex-shrink:0;
+                        ">&#8681; Print / Save PDF</button>
                     </div>
                     <div id="sopContentBody" class="sop-content-body markdown-body"></div>
                 </div>
